@@ -128,6 +128,12 @@ document.addEventListener('keydown', (e) => {
         case 'ArrowDown':
             previousSong();
             break;
+        case 'KeyV' && 'Equal':
+            myAudio.volume >= 0.9 ? myAudio.volume = 1 : myAudio.volume += 0.1;
+            break;
+        case 'KeyV' && 'Minus':
+            myAudio.volume <= 0.1 ? myAudio.volume = 0 : myAudio.volume -= 0.1;
+            break;
     }
     console.log(e.code)
 });
@@ -151,6 +157,19 @@ setInterval(() => {
         titleImg.classList.add('titleImgAnim');
         effect.style.width = '10px'
         effect.style.height = '10px'
+    }
+    if (myAudio.volume === 0) {
+        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
+        mute.classList.add('fa-volume-off', 'mr-4');
+
+    } else if (myAudio.volume <= 0.5 && myAudio.volume > 0) {
+        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-off');
+        mute.classList.add('fa-volume-down', 'mr-4');
+
+    } else {
+        mute.classList.remove('fa-volume-down', 'mr-4', 'fa-volume-off');
+        mute.classList.add('fa-volume-up', 'mr-3');
+
     }
 }, 30);
 
@@ -197,19 +216,7 @@ volume.addEventListener("click", function (e) {
         clickedValue = x * volume.max / volume.offsetWidth;
     myAudio.volume = clickedValue;
 
-    if (myAudio.volume === 0) {
-        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
-        mute.classList.add('fa-volume-off', 'mr-4');
 
-    } else if (myAudio.volume <= 0.5 && myAudio.volume > 0) {
-        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-off');
-        mute.classList.add('fa-volume-down', 'mr-4');
-
-    } else {
-        mute.classList.remove('fa-volume-down', 'mr-4', 'fa-volume-off');
-        mute.classList.add('fa-volume-up', 'mr-3');
-
-    }
 });
 
 mute.addEventListener('click', () => {
