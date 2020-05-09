@@ -10,7 +10,8 @@ const progressBar = document.querySelector('.progressBar');
 const titleAuthor = document.getElementById('titleAuthor');
 const titleName = document.getElementById('titleName');
 const titleImg = document.querySelector('.titleImg');
-let seeking = false, playState, isPaused, activeMusic;
+const effect = document.querySelector('.effect');
+let seeking = false, playState, activeMusic;
 
 const music = [
     {
@@ -48,7 +49,6 @@ const musicInfo = () => {
 
 const init = () => {
     playState = 0;
-    isPaused = true;
     activeMusic = 0;
     myAudio.currentTime = 0.1;
     timeAudio.textContent = `0:00`;
@@ -66,20 +66,23 @@ const timeMath = (time, dom) => {
     }
 }
 
-const play = (state, remove, add, paused) => {
+const play = (state, remove, add) => {
     playState = state;
     playFa.classList.remove(remove);
     playFa.classList.add(add);
-    isPaused = paused;
 }
 
 const musicCtrl = (playStateValue = 0) => {
     if (playState === playStateValue) {
-        play(1, 'fa-play', 'fa-pause', false);
+        play(1, 'fa-play', 'fa-pause');
         myAudio.play();
+        effect.style.width = '30px'
+        effect.style.height = '30px'
     } else {
-        play(0, 'fa-pause', 'fa-play', false);
+        play(0, 'fa-pause', 'fa-play');
         myAudio.pause();
+        effect.style.width = '0px'
+        effect.style.height = '0px'
     }
 }
 
@@ -92,6 +95,12 @@ setInterval(() => {
         timeMath(myAudio.currentTime, timeAudio);
         timeMath(myAudio.duration, durationAudio);
         progress.value = percentage;
+        if(myAudio.currentTime === myAudio.duration){
+            activeMusic++;
+            musicInfo();
+            musicCtrl(1);
+        }
+        myAudio.paused === true ? play(0, 'fa-pause', 'fa-play', false) : play(1, 'fa-play', 'fa-pause');
 }, 30);
 
 ///controls for pc

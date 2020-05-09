@@ -69,11 +69,57 @@ progress::-webkit-progress-value {
   height: 50px;
 }
 
+.effect {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  -webkit-transition: .3s;
+  transition: .3s;
+  border-radius: 25px;
+  background: #00aeffa9;
+  margin-left: 168px;
+  margin-top: 18px;
+  -webkit-animation: scaleAnim .4s infinite;
+          animation: scaleAnim .4s infinite;
+}
+
+@-webkit-keyframes scaleAnim {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+}
+
+@keyframes scaleAnim {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+}
+
 @media screen and (min-width: 366px) {
   .controls-container {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  }
+  .controls-container__buttons, .controls-container__title-image {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+  .controls-container__title-image__titles {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
   }
 }
 /*# sourceMappingURL=style.css.map */
