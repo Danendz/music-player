@@ -96,9 +96,11 @@ const nextSong = () => {
         musicInfo();
         musicCtrl(1);
     } else {
+        clearInterval()
         activeMusic++;
         musicInfo();
         musicCtrl(1);
+
     }
 }
 const previousSong = () => {
@@ -137,9 +139,8 @@ document.addEventListener('keydown', (e) => {
     }
 
 });
-
-myAudio.addEventListener('load', () => {
-    setInterval(() => {
+setInterval(() => {
+    if (myAudio.duration > 0) {
         const percentage = myAudio.currentTime / myAudio.duration * 100;
         timeMath(myAudio.currentTime, timeAudio);
         timeMath(myAudio.duration, durationAudio);
@@ -162,18 +163,18 @@ myAudio.addEventListener('load', () => {
         if (myAudio.volume === 0) {
             mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
             mute.classList.add('fa-volume-off', 'mr-4');
-    
+
         } else if (myAudio.volume <= 0.5 && myAudio.volume > 0) {
             mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-off');
             mute.classList.add('fa-volume-down', 'mr-4');
-    
+
         } else {
             mute.classList.remove('fa-volume-down', 'mr-4', 'fa-volume-off');
             mute.classList.add('fa-volume-up', 'mr-3');
-    
+
         }
-    }, 30);
-});
+    }
+}, 30);
 
 
 ///controls for pc
