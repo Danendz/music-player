@@ -78,11 +78,9 @@ const musicCtrl = (playStateValue = 0) => {
     if (playState === playStateValue) {
         play(1, 'fa-play', 'fa-pause');
         myAudio.play();
-
     } else {
         play(0, 'fa-pause', 'fa-play');
         myAudio.pause();
-
     }
 }
 
@@ -100,7 +98,6 @@ const nextSong = () => {
         activeMusic++;
         musicInfo();
         musicCtrl(1);
-
     }
 }
 const previousSong = () => {
@@ -116,24 +113,31 @@ const previousSong = () => {
 document.addEventListener('keydown', (e) => {
     switch (e.code) {
         case 'Space':
+            e.preventDefault();
             musicCtrl();
             break;
         case 'ArrowRight':
+            e.preventDefault();
             myAudio.currentTime += 5;
             break;
         case 'ArrowLeft':
+            e.preventDefault();
             myAudio.currentTime -= 5;
             break;
         case 'ArrowUp':
+            e.preventDefault();
             nextSong();
             break;
         case 'ArrowDown':
+            e.preventDefault();
             previousSong();
             break;
         case 'KeyV' && 'Equal':
+            e.preventDefault();
             myAudio.volume >= 0.9 ? myAudio.volume = 1 : myAudio.volume += 0.1;
             break;
         case 'KeyV' && 'Minus':
+            e.preventDefault();
             myAudio.volume <= 0.1 ? myAudio.volume = 0 : myAudio.volume -= 0.1;
             break;
     }
