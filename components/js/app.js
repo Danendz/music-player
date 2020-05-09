@@ -5,12 +5,14 @@ const nextBtn = document.getElementById('next');
 const backBtn = document.getElementById('back');
 const timeAudio = document.getElementById('timeAudio');
 const playFa = document.querySelector('.fa-play');
-const progress = document.querySelector('.progress');
+const progress = document.getElementById('progress');
 const progressBar = document.querySelector('.progressBar');
 const titleAuthor = document.getElementById('titleAuthor');
 const titleName = document.getElementById('titleName');
 const titleImg = document.querySelector('.titleImg');
 const effect = document.querySelector('.effect');
+const volume = document.getElementById('volume');
+const mute = document.getElementById('mute');
 let seeking = false, playState, activeMusic;
 
 const music = [
@@ -76,13 +78,11 @@ const musicCtrl = (playStateValue = 0) => {
     if (playState === playStateValue) {
         play(1, 'fa-play', 'fa-pause');
         myAudio.play();
-        effect.style.width = '30px'
-        effect.style.height = '30px'
+
     } else {
         play(0, 'fa-pause', 'fa-play');
         myAudio.pause();
-        effect.style.width = '0px'
-        effect.style.height = '0px'
+
     }
 }
 
@@ -90,23 +90,74 @@ playBtn.addEventListener('click', () => {
     musicCtrl();
 });
 
+const nextSong = () => {
+    if (activeMusic === music.length - 1) {
+        activeMusic = 0;
+        musicInfo();
+        musicCtrl(1);
+    } else {
+        activeMusic++;
+        musicInfo();
+        musicCtrl(1);
+    }
+}
+const previousSong = () => {
+    if (activeMusic === 0 || myAudio.currentTime > 2) {
+        myAudio.currentTime = 0;
+        musicCtrl(1);
+    } else {
+        activeMusic--;
+        musicInfo();
+        musicCtrl(1);
+    }
+}
+document.addEventListener('keydown', (e) => {
+    switch (e.code) {
+        case 'Space':
+            musicCtrl();
+            break;
+        case 'ArrowRight':
+            myAudio.currentTime += 5;
+            break;
+        case 'ArrowLeft':
+            myAudio.currentTime -= 5;
+            break;
+        case 'ArrowUp':
+            nextSong();
+            break;
+        case 'ArrowDown':
+            previousSong();
+            break;
+    }
+    console.log(e.code)
+});
+
 setInterval(() => {
-        const percentage = myAudio.currentTime / myAudio.duration * 100;
-        timeMath(myAudio.currentTime, timeAudio);
-        timeMath(myAudio.duration, durationAudio);
-        progress.value = percentage;
-        if(myAudio.currentTime === myAudio.duration){
-            activeMusic++;
-            musicInfo();
-            musicCtrl(1);
-        }
-        myAudio.paused === true ? play(0, 'fa-pause', 'fa-play', false) : play(1, 'fa-play', 'fa-pause');
+    const percentage = myAudio.currentTime / myAudio.duration * 100;
+    timeMath(myAudio.currentTime, timeAudio);
+    timeMath(myAudio.duration, durationAudio);
+    progress.value = percentage;
+    volume.value = myAudio.volume;
+    if (myAudio.currentTime === myAudio.duration) {
+        nextSong();
+    }
+    if (myAudio.paused) {
+        play(0, 'fa-pause', 'fa-play');
+        titleImg.classList.remove('titleImgAnim');
+        effect.style.width = '0px'
+        effect.style.height = '0px'
+    } else {
+        play(1, 'fa-play', 'fa-pause');
+        titleImg.classList.add('titleImgAnim');
+        effect.style.width = '10px'
+        effect.style.height = '10px'
+    }
 }, 30);
 
 ///controls for pc
-progress.addEventListener("mousedown", function (e) { seeking = true; seekPc(e, 'pc'); });
+progress.addEventListener("mousedown", function (e) { seeking = true; seekPc(e); });
 
-progress.addEventListener("mousemove", function (e) { seekPc(e, 'pc'); });
+progress.addEventListener("mousemove", function (e) { seekPc(e); });
 
 progress.addEventListener("mouseup", function () { seeking = false; });
 
@@ -134,33 +185,33 @@ function seekMob(e) {
 }
 
 nextBtn.addEventListener('click', () => {
-    if (activeMusic === music.length - 1) {
-        activeMusic = 0;
-        musicInfo();
-        musicCtrl(1);
-    } else {
-        activeMusic++;
-        musicInfo();
-        musicCtrl(1);
-    }
-    console.log(activeMusic);
+    nextSong();
 });
 
 backBtn.addEventListener('click', () => {
-    if (activeMusic === 0 || myAudio.currentTime > 2) {
-        myAudio.currentTime = 0;
-        musicCtrl(1);
-    } else {
-        activeMusic--;
-        musicInfo();
-        musicCtrl(1);
-    }
-    console.log(activeMusic);
+    previousSong();
 });
 
-/* let x = e.pageX - this.offsetLeft,
-y = e.pageY - this.offsetTop,
-clickedValue = x * this.max / this.offsetWidth;
-myAudio.currentTime = clickedValue * 2;
-progress.value = clickedValue;
-console.log(clickedValue / 2); */
+volume.addEventListener("click", function (e) {
+    let x = e.clientX - volume.offsetLeft,
+        clickedValue = x * volume.max / volume.offsetWidth;
+    myAudio.volume = clickedValue;
+
+    if (myAudio.volume === 0) {
+        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
+        mute.classList.add('fa-volume-off', 'mr-4');
+
+    } else if (myAudio.volume <= 0.5 && myAudio.volume > 0) {
+        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-off');
+        mute.classList.add('fa-volume-down', 'mr-4');
+
+    } else {
+        mute.classList.remove('fa-volume-down', 'mr-4', 'fa-volume-off');
+        mute.classList.add('fa-volume-up', 'mr-3');
+
+    }
+});
+
+mute.addEventListener('click', () => {
+    myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
+});

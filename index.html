@@ -24,6 +24,7 @@
       <div class="d-flex text-secondary mb-1 progressBar align-items-center">
         <progress
           class="progress position-absolute"
+          id="progress"
           value="0.1"
           max="100"
         ></progress>
@@ -42,16 +43,21 @@
             <i class="fa fa-forward" aria-hidden="true"></i>
           </button>
         </div>
-        <span class="effect"></span>
+        
         <div
           class="d-flex controls-container__title-image justify-content-center mt-2"
         >
+        <span class="effect"></span>
           <img class="titleImg ml-3" src="./components/img/pascal.jpg" alt="" />
-          <div class="d-flex controls-container__title-image__titles flex-column text-light ml-2">
+          <div
+            class="d-flex controls-container__title-image__titles flex-column text-light ml-2"
+          >
             <span id="titleAuthor"></span>
             <span id="titleName"></span>
           </div>
         </div>
+        <progress class="w-25 ml-auto mt-4 mr-3 progress" id="volume" max="1"></progress>
+        <i class="fa fa-volume-up mt-3 mr-3 volumeIco" id="mute" aria-hidden="true"></i>
       </div>
     </div>
     <script src="./components/js/app.js"></script>

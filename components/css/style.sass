@@ -31,6 +31,7 @@
     height: 1.9vh
     background: transparent
     background: transparent
+    cursor: pointer
 
 progress[value]::-webkit-progress-bar 
     background-color: transparent
@@ -53,22 +54,44 @@ progress::-webkit-progress-value
     width: 50px
     height: 50px
 
+.titleImgAnim
+    animation: rotateImg 22s 0s infinite 
+
+@keyframes rotateImg
+    0%
+        transform: rotate(0)
+    100%
+        transform: rotate(360deg)
+
 .effect
-    position: absolute
+    position: relative
     width: 0px
     height: 0px
     transition: .3s 
     border-radius: 25px
-    background: #00aeffa9
-    margin-left: 168px
+    background: #00aeffa9  
     margin-top: 18px
     animation: scaleAnim .4s infinite
+
 
 @keyframes scaleAnim
     0%
         transform: scale(1)
     100%
         transform: scale(1.2)
+
+.volumeIco
+    font-size: 30px
+    transition: .3s
+    color: #ffffff8c
+    cursor: pointer
+    display: none
+
+.volumeIco:hover
+    color: #ffffffe0
+
+#volume
+    display: none
 
 @media screen and ( min-width: 366px )
     .controls-container
@@ -78,3 +101,7 @@ progress::-webkit-progress-value
         &__title-image
             &__titles
                 align-items: flex-start
+
+@media screen and ( min-width: 560px )
+    #volume, .volumeIco
+        display: block

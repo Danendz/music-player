@@ -39,6 +39,7 @@
   height: 1.9vh;
   background: transparent;
   background: transparent;
+  cursor: pointer;
 }
 
 progress[value]::-webkit-progress-bar {
@@ -69,15 +70,41 @@ progress::-webkit-progress-value {
   height: 50px;
 }
 
+.titleImgAnim {
+  -webkit-animation: rotateImg 22s 0s infinite;
+          animation: rotateImg 22s 0s infinite;
+}
+
+@-webkit-keyframes rotateImg {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateImg {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
 .effect {
-  position: absolute;
+  position: relative;
   width: 0px;
   height: 0px;
   -webkit-transition: .3s;
   transition: .3s;
   border-radius: 25px;
   background: #00aeffa9;
-  margin-left: 168px;
   margin-top: 18px;
   -webkit-animation: scaleAnim .4s infinite;
           animation: scaleAnim .4s infinite;
@@ -105,6 +132,23 @@ progress::-webkit-progress-value {
   }
 }
 
+.volumeIco {
+  font-size: 30px;
+  -webkit-transition: .3s;
+  transition: .3s;
+  color: #ffffff8c;
+  cursor: pointer;
+  display: none;
+}
+
+.volumeIco:hover {
+  color: #ffffffe0;
+}
+
+#volume {
+  display: none;
+}
+
 @media screen and (min-width: 366px) {
   .controls-container {
     display: -webkit-box;
@@ -120,6 +164,12 @@ progress::-webkit-progress-value {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
+  }
+}
+
+@media screen and (min-width: 560px) {
+  #volume, .volumeIco {
+    display: block;
   }
 }
 /*# sourceMappingURL=style.css.map */
