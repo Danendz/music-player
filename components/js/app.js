@@ -13,6 +13,7 @@ const titleImg = document.querySelector('.titleImg');
 const effect = document.querySelector('.effect');
 const volume = document.getElementById('volume');
 const mute = document.getElementById('mute');
+const buffered = document.getElementById('buffered');
 let seeking = false, playState, activeMusic;
 
 const music = [
@@ -150,6 +151,7 @@ setInterval(() => {
         timeMath(myAudio.duration, durationAudio);
         progress.value = percentage;
         volume.value = myAudio.volume;
+        buffered.value = myAudio.buffered.end(0);
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
         }
@@ -177,36 +179,37 @@ setInterval(() => {
             mute.classList.add('fa-volume-up', 'mr-3');
 
         }
+
     }
 }, 30);
 
 
 ///controls for pc
-progress.addEventListener("mousedown", function (e) { seeking = true; seekPc(e); });
+buffered.addEventListener("mousedown", function (e) { seeking = true; seekPc(e); });
 
-progress.addEventListener("mousemove", function (e) { seekPc(e); });
+buffered.addEventListener("mousemove", function (e) { seekPc(e); });
 
-progress.addEventListener("mouseup", function () { seeking = false; });
+buffered.addEventListener("mouseup", function () { seeking = false; });
 
 function seekPc(e) {
     if (seeking) {
-        let x = e.clientX - progress.offsetLeft,
-            clickedValue = x * progress.max * myAudio.duration / 100 / progress.offsetWidth;
+        let x = e.clientX - buffered.offsetLeft,
+            clickedValue = x * buffered.max * myAudio.duration / 100 / buffered.offsetWidth;
         myAudio.currentTime = clickedValue;
     }
 }
 
 ///controls for mobile
-progress.addEventListener("touchstart", function (e) { seeking = true; seekMob(e); });
+buffered.addEventListener("touchstart", function (e) { seeking = true; seekMob(e); });
 
-progress.addEventListener("touchmove", function (e) { seekMob(e); });
+buffered.addEventListener("touchmove", function (e) { seekMob(e); });
 
-progress.addEventListener("touchend", function () { seeking = false; });
+buffered.addEventListener("touchend", function () { seeking = false; });
 
 function seekMob(e) {
     if (seeking) {
-        let x = e.changedTouches[0].clientX - progress.offsetLeft,
-            clickedValue = x * progress.max * myAudio.duration / 100 / progress.offsetWidth;
+        let x = e.changedTouches[0].clientX - buffered.offsetLeft,
+            clickedValue = x * buffered.max * myAudio.duration / 100 / buffered.offsetWidth;
         myAudio.currentTime = clickedValue;
     }
 }
@@ -223,10 +226,9 @@ volume.addEventListener("click", function (e) {
     let x = e.clientX - volume.offsetLeft,
         clickedValue = x * volume.max / volume.offsetWidth;
     myAudio.volume = clickedValue;
-
-
 });
 
 mute.addEventListener('click', () => {
     myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
 });
+
