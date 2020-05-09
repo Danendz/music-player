@@ -135,43 +135,46 @@ document.addEventListener('keydown', (e) => {
             myAudio.volume <= 0.1 ? myAudio.volume = 0 : myAudio.volume -= 0.1;
             break;
     }
-    console.log(e.code)
+
 });
 
-setInterval(() => {
-    const percentage = myAudio.currentTime / myAudio.duration * 100;
-    timeMath(myAudio.currentTime, timeAudio);
-    timeMath(myAudio.duration, durationAudio);
-    progress.value = percentage;
-    volume.value = myAudio.volume;
-    if (myAudio.currentTime === myAudio.duration) {
-        nextSong();
-    }
-    if (myAudio.paused) {
-        play(0, 'fa-pause', 'fa-play');
-        titleImg.classList.remove('titleImgAnim');
-        effect.style.width = '0px'
-        effect.style.height = '0px'
-    } else {
-        play(1, 'fa-play', 'fa-pause');
-        titleImg.classList.add('titleImgAnim');
-        effect.style.width = '10px'
-        effect.style.height = '10px'
-    }
-    if (myAudio.volume === 0) {
-        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
-        mute.classList.add('fa-volume-off', 'mr-4');
+myAudio.addEventListener('load', () => {
+    setInterval(() => {
+        const percentage = myAudio.currentTime / myAudio.duration * 100;
+        timeMath(myAudio.currentTime, timeAudio);
+        timeMath(myAudio.duration, durationAudio);
+        progress.value = percentage;
+        volume.value = myAudio.volume;
+        if (myAudio.currentTime === myAudio.duration) {
+            nextSong();
+        }
+        if (myAudio.paused) {
+            play(0, 'fa-pause', 'fa-play');
+            titleImg.classList.remove('titleImgAnim');
+            effect.style.width = '0px'
+            effect.style.height = '0px'
+        } else {
+            play(1, 'fa-play', 'fa-pause');
+            titleImg.classList.add('titleImgAnim');
+            effect.style.width = '10px'
+            effect.style.height = '10px'
+        }
+        if (myAudio.volume === 0) {
+            mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
+            mute.classList.add('fa-volume-off', 'mr-4');
+    
+        } else if (myAudio.volume <= 0.5 && myAudio.volume > 0) {
+            mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-off');
+            mute.classList.add('fa-volume-down', 'mr-4');
+    
+        } else {
+            mute.classList.remove('fa-volume-down', 'mr-4', 'fa-volume-off');
+            mute.classList.add('fa-volume-up', 'mr-3');
+    
+        }
+    }, 30);
+});
 
-    } else if (myAudio.volume <= 0.5 && myAudio.volume > 0) {
-        mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-off');
-        mute.classList.add('fa-volume-down', 'mr-4');
-
-    } else {
-        mute.classList.remove('fa-volume-down', 'mr-4', 'fa-volume-off');
-        mute.classList.add('fa-volume-up', 'mr-3');
-
-    }
-}, 30);
 
 ///controls for pc
 progress.addEventListener("mousedown", function (e) { seeking = true; seekPc(e); });
