@@ -94,8 +94,9 @@ const nextSong = () => {
         activeMusic = 0;
         musicInfo();
         musicCtrl(1);
+
     } else {
-        clearInterval()
+
         activeMusic++;
         musicInfo();
         musicCtrl(1);
@@ -146,12 +147,13 @@ document.addEventListener('keydown', (e) => {
 });
 setInterval(() => {
     if (myAudio.duration > 0) {
-        const percentage = myAudio.currentTime / myAudio.duration * 100;
+        const played = myAudio.currentTime / myAudio.duration * 100;
+        const loaded = myAudio.buffered.end(0) / myAudio.duration * 100;
         timeMath(myAudio.currentTime, timeAudio);
         timeMath(myAudio.duration, durationAudio);
-        progress.value = percentage;
+        progress.value = played;
         volume.value = myAudio.volume;
-        buffered.value = myAudio.buffered.end(0);
+        buffered.value = loaded;
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
         }
