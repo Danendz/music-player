@@ -191,7 +191,7 @@ setInterval(() => {
                 title: music[activeMusic].name,
                 artist: music[activeMusic].author,
                 artwork: [
-                    { src: '../img/pascal.jpg' }
+                    {src: music[activeMusic].img}
                 ]
             });
 
@@ -260,19 +260,21 @@ mute.addEventListener('click', () => {
     myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
 });
 
-
-navigator.mediaSession.setActionHandler('seekto', function (e) {
-    let x = e.changedTouches[0].clientX - buffered.offsetLeft,
-        clickedValue = x * buffered.max * myAudio.duration / 100 / buffered.offsetWidth;
-    myAudio.currentTime = clickedValue;
-});
-
 musicCollectionBtn.addEventListener('click', () => {
     musicCollection.style.height === '50vh' ? musicCollection.style.height = '0vh' : musicCollection.style.height = '50vh';
 });
 
 for (i = 0; i < music.length; i++) {
-    const some = document.createElement('p');
-    some.innerHTML = music[i].author
-    musicCollection.appendChild(some);
+    const img = document.createElement('img');
+    const author = document.createElement('span');
+    const name = document.createElement('span');
+    img.src = music[i].src;
+    img.classList.add('titleImg', 'ml-3');
+    author.id = 'titleAuthor';
+    name.id = 'titleName';
+    author.innerHTML = music[i].author;
+    name.innerHTML = music[i].name;
+    musicCollection.appendChild(img);
+    musicCollection.appendChild(author);
+    musicCollection.appendChild(name);
 }
