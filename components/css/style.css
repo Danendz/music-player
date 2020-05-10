@@ -156,7 +156,10 @@ progress::-webkit-progress-value {
   display: none;
 }
 
-@media screen and (min-width: 366px) {
+@media screen and (min-width: 560px) {
+  #volume, .volumeIco {
+    display: block;
+  }
   .controls-container {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -171,12 +174,6 @@ progress::-webkit-progress-value {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
-  }
-}
-
-@media screen and (min-width: 560px) {
-  #volume, .volumeIco {
-    display: block;
   }
 }
 

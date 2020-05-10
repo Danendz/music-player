@@ -116,6 +116,8 @@ const previousSong = () => {
         musicCtrl(1);
     }
 }
+
+///Control from keybord
 document.addEventListener('keydown', (e) => {
     switch (e.code) {
         case 'Space':
@@ -150,6 +152,7 @@ document.addEventListener('keydown', (e) => {
 
 });
 
+///The live update for music(maybe it was not a good idea to do this)
 setInterval(() => {
     if (myAudio.duration > 0) {
         const played = myAudio.currentTime / myAudio.duration * 100;
@@ -212,14 +215,14 @@ setInterval(() => {
                     audio.fastSeek(event.seekTime);
                     return;
                 }
-                audio.currentTime = event.seekTime;
+                myAudio.currentTime = event.seekTime;
             });
         }
     }
 }, 30);
 
 
-///controls for pc
+///Controls for pc
 buffered.addEventListener("mousedown", function (e) { seeking = true; seekPc(e); });
 
 buffered.addEventListener("mousemove", function (e) { seekPc(e); });
@@ -234,7 +237,7 @@ function seekPc(e) {
     }
 }
 
-///controls for mobile
+///Controls for mobile
 buffered.addEventListener("touchstart", function (e) { seeking = true; seekMob(e); });
 
 buffered.addEventListener("touchmove", function (e) { seekMob(e); });
@@ -249,50 +252,68 @@ function seekMob(e) {
     }
 }
 
+///Next song button
 nextBtn.addEventListener('click', () => {
     nextSong();
 });
 
+///Previous song button
 backBtn.addEventListener('click', () => {
     previousSong();
 });
 
+///volume changer
 volume.addEventListener("click", function (e) {
     let x = e.clientX - volume.offsetLeft,
         clickedValue = x * volume.max / volume.offsetWidth;
     myAudio.volume = clickedValue;
 });
 
+///Mute music on click to volume icon
 mute.addEventListener('click', () => {
     myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
 });
 
+///Playlist open and close
 musicCollectionBtn.addEventListener('click', () => {
     musicCollection.style.height === '50vh' ? musicCollection.style.height = '0vh' : musicCollection.style.height = '50vh';
 });
 
+///loop for playlist
 for (i = 0; i < music.length; i++) {
+
+    ///Create playlist elements
     const container = document.createElement('div');
     const divTitle = document.createElement('div');
     const img = document.createElement('img');
     const author = document.createElement('span');
     const name = document.createElement('span');
+
+    ///Added classes
     container.classList.add('d-flex', 'music-collection__container', 'pt-3', 'pb-3');
-    divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100')
-    img.src = music[i].img;
+    divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100');
     img.classList.add('titleImgCollection', 'ml-3');
-    author.classList.add('pt-3', 'pb-1')
+    author.classList.add('pt-3', 'pb-1');
+    ///Added ids
     author.id = 'titleAuthor';
     name.id = 'titleName';
+
+    ///Database value in the elements
+    img.src = music[i].img;
     author.innerHTML = music[i].author;
     name.innerHTML = music[i].name;
+
+    ///Added elements into html
     container.appendChild(img);
     divTitle.appendChild(author);
     divTitle.appendChild(name);
     container.appendChild(divTitle)
     musicCollection.appendChild(container);
 }
+
 const musicCollectionContainer = document.querySelectorAll('.music-collection__container');
+
+///Change music on click from playlist
 musicCollectionContainer.forEach((el, id) => {
     musicCollectionContainer[id].addEventListener('click', () => {
         activeMusic = id;

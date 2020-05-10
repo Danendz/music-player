@@ -95,8 +95,10 @@ progress::-webkit-progress-value
 
 #volume
     display: none
-
-@media screen and ( min-width: 366px )
+    
+@media screen and ( min-width: 560px )
+    #volume, .volumeIco
+        display: block
     .controls-container
         display: flex
         &__buttons, &__title-image
@@ -104,10 +106,6 @@ progress::-webkit-progress-value
         &__title-image
             &__titles
                 align-items: flex-start
-
-@media screen and ( min-width: 560px )
-    #volume, .volumeIco
-        display: block
 
 #titleAuthor, #titleName
     transition: .3s
