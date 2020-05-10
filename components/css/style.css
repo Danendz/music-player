@@ -210,16 +210,11 @@ progress::-webkit-progress-value {
 }
 
 .music-collection__container {
-  -webkit-transition: .3s;
-  transition: .3s;
+  -webkit-transition: .6s;
+  transition: .6s;
   -webkit-box-shadow: 1px 1px 4px #00aeff36;
           box-shadow: 1px 1px 4px #00aeff36;
   cursor: pointer;
-}
-
-.music-collection__container:hover {
-  -webkit-transform: translateX(-5px);
-          transform: translateX(-5px);
 }
 
 .titleImgCollection {
@@ -241,5 +236,30 @@ progress::-webkit-progress-value {
 ::-webkit-scrollbar-thumb {
   background: #00aeff5d;
   border-radius: 15px;
+}
+
+.playing {
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+
+.fa-heart-o {
+  z-index: 99;
+  -webkit-transition: .4s;
+  transition: .4s;
+  color: #00aeff5d;
+  font-size: 35px;
+}
+
+.fa-heart {
+  z-index: 99;
+  -webkit-transition: .3s;
+  transition: .3s;
+  color: #00aeffa9;
+  font-size: 34.7px;
+}
+
+.additional {
+  z-index: 99;
 }
 /*# sourceMappingURL=style.css.map */

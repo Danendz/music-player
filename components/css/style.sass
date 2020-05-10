@@ -95,7 +95,7 @@ progress::-webkit-progress-value
 
 #volume
     display: none
-    
+
 @media screen and ( min-width: 560px )
     #volume, .volumeIco
         display: block
@@ -130,11 +130,10 @@ progress::-webkit-progress-value
     overflow-y: scroll
     overflow-x: hidden
     &__container
-        transition: .3s
+        transition: .6s
         box-shadow: 1px 1px 4px #00aeff36  
         cursor: pointer
-    &__container:hover
-        transform: translateX(-5px)
+
 
 .titleImgCollection
     transition: .5s
@@ -152,3 +151,20 @@ progress::-webkit-progress-value
     background: #00aeff5d
     border-radius: 15px
 
+.playing 
+    transform: translateX(-100%)
+
+.fa-heart-o
+    z-index: 99
+    transition: .4s
+    color: #00aeff5d
+    font-size: 35px
+
+.fa-heart
+    z-index: 99
+    transition: .3s
+    color: #00aeffa9
+    font-size: 34.7px
+    
+.additional 
+    z-index: 99

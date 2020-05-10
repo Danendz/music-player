@@ -18,6 +18,7 @@ const musicCollection = document.querySelector('.music-collection');
 
 let seeking = false, playState, activeMusic;
 
+///Pseudo database
 const music = [
     {
         author: 'Pascal Letoublon',
@@ -45,6 +46,7 @@ const music = [
     }
 ];
 
+///Music live info
 const musicInfo = () => {
     myAudio.src = music[activeMusic].src;
     titleImg.src = music[activeMusic].img;
@@ -52,6 +54,7 @@ const musicInfo = () => {
     titleName.textContent = music[activeMusic].name;
 }
 
+///Initialization function
 const init = () => {
     playState = 0;
     activeMusic = 0;
@@ -60,8 +63,10 @@ const init = () => {
     musicInfo();
 }
 
+///Initialization
 init();
 
+///Seconds to minutes and seconds
 const timeMath = (time, dom) => {
     let mins = ~~((time % 3600) / 60);
     let secs = ~~time % 60;
@@ -71,12 +76,14 @@ const timeMath = (time, dom) => {
     }
 }
 
+///Play function
 const play = (state, remove, add) => {
     playState = state;
     playFa.classList.remove(remove);
     playFa.classList.add(add);
 }
 
+///Music control play or pause function
 const musicCtrl = (playStateValue = 0) => {
     if (playState === playStateValue) {
         play(1, 'fa-play', 'fa-pause');
@@ -87,24 +94,25 @@ const musicCtrl = (playStateValue = 0) => {
     }
 }
 
+///Play button
 playBtn.addEventListener('click', () => {
     musicCtrl();
-
 });
 
+///Next song function
 const nextSong = () => {
     if (activeMusic === music.length - 1) {
         activeMusic = 0;
         musicInfo();
         musicCtrl(1);
-
     } else {
-
         activeMusic++;
         musicInfo();
         musicCtrl(1);
     }
 }
+
+//Previous song function
 const previousSong = () => {
     if (activeMusic === 0 || myAudio.currentTime > 2) {
         myAudio.currentTime = 0;
@@ -216,7 +224,6 @@ setInterval(() => {
     }
 }, 30);
 
-
 ///Controls for pc
 buffered.addEventListener("mousedown", function (e) { seeking = true; seekPc(e); });
 
@@ -280,15 +287,20 @@ for (i = 0; i < music.length; i++) {
     ///Create playlist elements
     const container = document.createElement('div');
     const divTitle = document.createElement('div');
+    const divAditional = document.createElement('div');
+    const likeIcon = document.createElement('i');
     const img = document.createElement('img');
     const author = document.createElement('span');
     const name = document.createElement('span');
 
     ///Added classes
     container.classList.add('d-flex', 'music-collection__container', 'pt-3', 'pb-3');
-    divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100');
+    divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100', 'titleContainer');
+    divAditional.classList.add('d-flex', 'flex-row', 'w-100', 'additional');
     img.classList.add('titleImgCollection', 'ml-3');
     author.classList.add('pt-3', 'pb-1');
+    likeIcon.classList.add('fa', 'likeIcon', 'mt-4', 'fa-heart-o');
+
     ///Added ids
     author.id = 'titleAuthor';
     name.id = 'titleName';
@@ -300,19 +312,37 @@ for (i = 0; i < music.length; i++) {
 
     ///Added elements into html
     container.appendChild(img);
+    container.appendChild(divTitle);
     divTitle.appendChild(author);
     divTitle.appendChild(name);
-    container.appendChild(divTitle)
+    container.appendChild(divAditional);
+    divAditional.appendChild(likeIcon);
     musicCollection.appendChild(container);
 }
 
 const musicCollectionContainer = document.querySelectorAll('.music-collection__container');
+const like = document.querySelectorAll('.likeIcon');
+const titleContainer = document.querySelectorAll('.titleContainer');
+const titleImgCollection = document.querySelectorAll('.titleImgCollection');
 
 ///Change music on click from playlist
 musicCollectionContainer.forEach((el, id) => {
-    musicCollectionContainer[id].addEventListener('click', () => {
+    const changeMusic = () => {
         activeMusic = id;
         musicInfo();
         musicCtrl(1);
+    }
+
+    titleContainer[id].addEventListener('click', changeMusic);
+    titleImgCollection[id].addEventListener('click', changeMusic);
+
+    like[id].addEventListener('click', () => {
+        if (like[id].className === 'fa likeIcon mt-4 fa-heart-o') {
+            like[id].classList.remove('fa-heart-o');
+            like[id].classList.add('fa-heart');
+        } else {
+            like[id].classList.remove('fa-heart');
+            like[id].classList.add('fa-heart-o');
+        }
     });
 });
