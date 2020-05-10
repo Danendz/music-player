@@ -238,9 +238,33 @@ volume.addEventListener("click", function (e) {
 mute.addEventListener('click', () => {
     myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
 });
-navigator.mediaSession.setActionHandler('previoustrack', function () {
-    previousSong();
-});
-navigator.mediaSession.setActionHandler('nexttrack', function () {
-    nextSong();
-});
+
+if ('mediaSession' in navigator) {
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: 'Never Gonna Give You Up',
+      artist: 'Rick Astley',
+      album: 'Whenever You Need Somebody',
+      artwork: [
+        { src: 'https://dummyimage.com/96x96',   sizes: '96x96',   type: 'image/png' },
+        { src: 'https://dummyimage.com/128x128', sizes: '128x128', type: 'image/png' },
+        { src: 'https://dummyimage.com/192x192', sizes: '192x192', type: 'image/png' },
+        { src: 'https://dummyimage.com/256x256', sizes: '256x256', type: 'image/png' },
+        { src: 'https://dummyimage.com/384x384', sizes: '384x384', type: 'image/png' },
+        { src: 'https://dummyimage.com/512x512', sizes: '512x512', type: 'image/png' },
+      ]
+    });
+  
+    navigator.mediaSession.setActionHandler('seekbackward', function() {
+        myAudio.currentTime -= 5;
+    });
+    navigator.mediaSession.setActionHandler('seekforward', function() {
+        myAudio.currentTime += 5;
+    });
+    navigator.mediaSession.setActionHandler('previoustrack', function() {
+        previousSong();
+    });
+    navigator.mediaSession.setActionHandler('nexttrack', function() {
+        nextSong();
+    });
+  }
