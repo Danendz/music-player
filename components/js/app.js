@@ -157,8 +157,6 @@ setInterval(() => {
         volume.value = myAudio.volume;
         buffered.value = loaded;
 
-
-
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
         }
@@ -186,7 +184,28 @@ setInterval(() => {
             mute.classList.add('fa-volume-up', 'mr-3');
 
         }
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: music[activeMusic].name,
+                artist: music[activeMusic].author,
+                artwork: [
+                    { src: music[activeMusic].src }
+                ]
+            });
 
+            navigator.mediaSession.setActionHandler('seekbackward', function () {
+                myAudio.currentTime -= 5;
+            });
+            navigator.mediaSession.setActionHandler('seekforward', function () {
+                myAudio.currentTime += 5;
+            });
+            navigator.mediaSession.setActionHandler('previoustrack', function () {
+                previousSong();
+            });
+            navigator.mediaSession.setActionHandler('nexttrack', function () {
+                nextSong();
+            });
+        }
     }
 }, 30);
 
@@ -239,30 +258,11 @@ mute.addEventListener('click', () => {
     myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
 });
 
-if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: music[activeMusic].name,
-        artist: music[activeMusic].author,
-        artwork: [
-            { src: music[activeMusic].src, sizes: '96x96', type: 'image/jpg' },
-            { src: music[activeMusic].src, sizes: '128x128', type: 'image/jpg' },
-            { src: music[activeMusic].src, sizes: '192x192', type: 'image/jpg' },
-            { src: music[activeMusic].src, sizes: '256x256', type: 'image/jpg' },
-            { src: music[activeMusic].src, sizes: '384x384', type: 'image/jpg' },
-            { src: music[activeMusic].src, sizes: '512x512', type: 'image/jpg' },
-        ]
-    });
 
-    navigator.mediaSession.setActionHandler('seekbackward', function () {
-        myAudio.currentTime -= 5;
-    });
-    navigator.mediaSession.setActionHandler('seekforward', function () {
-        myAudio.currentTime += 5;
-    });
-    navigator.mediaSession.setActionHandler('previoustrack', function () {
-        previousSong();
-    });
-    navigator.mediaSession.setActionHandler('nexttrack', function () {
-        nextSong();
-    });
-}
+navigator.mediaSession.setActionHandler('seekto', function (event) {
+    if (event.fastSeek && ('fastSeek' in audio)) {
+        audio.fastSeek(event.seekTime);
+        return;
+    }
+    audio.currentTime = event.seekTime;
+})
