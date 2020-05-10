@@ -158,7 +158,11 @@ setInterval(() => {
         progress.value = played;
         volume.value = myAudio.volume;
         buffered.value = loaded;
-
+        navigator.mediaSession.setPositionState({
+            duration: myAudio.duration,
+            playbackRate: myAudio.playbackRate,
+            position: myAudio.currentTime
+        });
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
         }
@@ -194,11 +198,7 @@ setInterval(() => {
                     { src: music[activeMusic].img }
                 ]
             });
-            navigator.mediaSession.setPositionState({
-                duration: myAudio.duration,
-                playbackRate: myAudio.playbackRate,
-                position: myAudio.currentTime
-            });
+
             navigator.mediaSession.setActionHandler('seekbackward', function () {
                 myAudio.currentTime -= 5;
             });
@@ -274,10 +274,11 @@ for (i = 0; i < music.length; i++) {
     const img = document.createElement('img');
     const author = document.createElement('span');
     const name = document.createElement('span');
-    container.classList.add('d-flex', 'music-collection__container');
-    divTitle.classList.add('d-flex', 'justify-content-center', 'w-100')
+    container.classList.add('d-flex', 'music-collection__container', 'pt-3', 'pb-3');
+    divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100')
     img.src = music[i].img;
-    img.classList.add('titleImg', 'ml-3');
+    img.classList.add('titleImgCollection', 'ml-3');
+    author.classList.add('pt-3', 'pb-1')
     author.id = 'titleAuthor';
     name.id = 'titleName';
     author.innerHTML = music[i].author;
