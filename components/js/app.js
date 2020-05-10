@@ -217,10 +217,10 @@ setInterval(() => {
             });
             navigator.mediaSession.setActionHandler('seekto', function (event) {
                 if (event.fastSeek && ('fastSeek' in audio)) {
-                    audio.fastSeek(event.seekTime);
+                    myAudio.fastSeek(event.seekTime);
                     return;
                 }
-                audio.currentTime = event.seekTime;
+                myAudio.currentTime = event.seekTime;
             });
         }
     }
