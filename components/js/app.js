@@ -191,10 +191,14 @@ setInterval(() => {
                 title: music[activeMusic].name,
                 artist: music[activeMusic].author,
                 artwork: [
-                    {src: music[activeMusic].img}
+                    { src: music[activeMusic].img }
                 ]
             });
-
+            navigator.mediaSession.setPositionState({
+                duration: myAudio.duration,
+                playbackRate: myAudio.playbackRate,
+                position: myAudio.currentTime
+            });
             navigator.mediaSession.setActionHandler('seekbackward', function () {
                 myAudio.currentTime -= 5;
             });
@@ -265,16 +269,22 @@ musicCollectionBtn.addEventListener('click', () => {
 });
 
 for (i = 0; i < music.length; i++) {
+    const container = document.createElement('div');
+    const divTitle = document.createElement('div');
     const img = document.createElement('img');
     const author = document.createElement('span');
     const name = document.createElement('span');
-    img.src = music[i].src;
+    container.classList.add('d-flex', 'music-collection__container');
+    divTitle.classList.add('d-flex', 'justify-content-center', 'w-100')
+    img.src = music[i].img;
     img.classList.add('titleImg', 'ml-3');
     author.id = 'titleAuthor';
     name.id = 'titleName';
     author.innerHTML = music[i].author;
     name.innerHTML = music[i].name;
-    musicCollection.appendChild(img);
-    musicCollection.appendChild(author);
-    musicCollection.appendChild(name);
+    container.appendChild(img);
+    divTitle.appendChild(author);
+    divTitle.appendChild(name);
+    container.appendChild(divTitle)
+    musicCollection.appendChild(container);
 }
