@@ -243,6 +243,6 @@ progress::-webkit-progress-value {
 
 ::-webkit-scrollbar-thumb {
   background: #00aeff5d;
-  border-radius: 25px;
+  border-radius: 15px;
 }
 /*# sourceMappingURL=style.css.map */
