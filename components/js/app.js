@@ -191,7 +191,7 @@ setInterval(() => {
                 title: music[activeMusic].name,
                 artist: music[activeMusic].author,
                 artwork: [
-                    { src:  '../img/pascal.jpg'}
+                    { src: '../img/pascal.jpg' }
                 ]
             });
 
@@ -261,14 +261,18 @@ mute.addEventListener('click', () => {
 });
 
 
-navigator.mediaSession.setActionHandler('seekto', function (event) {
-    if (event.fastSeek && ('fastSeek' in audio)) {
-        audio.fastSeek(event.seekTime);
-        return;
-    }
-    audio.currentTime = event.seekTime;
+navigator.mediaSession.setActionHandler('seekto', function (e) {
+    let x = e.changedTouches[0].clientX - buffered.offsetLeft,
+        clickedValue = x * buffered.max * myAudio.duration / 100 / buffered.offsetWidth;
+    myAudio.currentTime = clickedValue;
 });
 
 musicCollectionBtn.addEventListener('click', () => {
     musicCollection.style.height === '50vh' ? musicCollection.style.height = '0vh' : musicCollection.style.height = '50vh';
-})
+});
+
+for (i = 0; i < music.length; i++) {
+    const some = document.createElement('p');
+    some.innerHTML = music[i].author
+    musicCollection.appendChild(some);
+}
