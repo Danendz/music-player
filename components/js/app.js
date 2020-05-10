@@ -27,7 +27,7 @@ const music = [
         img: './components/img/pascal.jpg'
     },
     {
-        author: 'Bones',
+        author: 'Bones labpmes',
         name: 'CrtlAltDelete',
         src: './components/media/Bones - CtrlAltDelete.mp3',
         img: './components/img/bones.jpg'
@@ -50,8 +50,10 @@ const music = [
 const musicInfo = () => {
     myAudio.src = music[activeMusic].src;
     titleImg.src = music[activeMusic].img;
-    titleAuthor.textContent = music[activeMusic].author;
-    titleName.textContent = music[activeMusic].name;
+
+    music[activeMusic].author.length > 16 ? titleAuthor.textContent = music[activeMusic].author.slice(0, 16) + '...' : titleAuthor.textContent = music[activeMusic].author;
+
+    music[activeMusic].name.length > 16 ? titleName.textContent = music[activeMusic].name.slice(0, 16) + '...' : titleName.textContent = music[activeMusic].name;
 }
 
 ///Initialization function
@@ -289,6 +291,7 @@ for (i = 0; i < music.length; i++) {
     const divTitle = document.createElement('div');
     const divAditional = document.createElement('div');
     const likeIcon = document.createElement('i');
+    const addToFavoriteIcon = document.createElement('i');
     const img = document.createElement('img');
     const author = document.createElement('span');
     const name = document.createElement('span');
@@ -296,10 +299,11 @@ for (i = 0; i < music.length; i++) {
     ///Added classes
     container.classList.add('d-flex', 'music-collection__container', 'pt-3', 'pb-3');
     divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100', 'titleContainer');
-    divAditional.classList.add('d-flex', 'flex-row', 'w-100', 'additional');
+    divAditional.classList.add('d-flex', 'flex-row', 'additional');
     img.classList.add('titleImgCollection', 'ml-3');
     author.classList.add('pt-3', 'pb-1');
     likeIcon.classList.add('fa', 'likeIcon', 'mt-4', 'fa-heart-o');
+    addToFavoriteIcon.classList.add('fa', 'favoriteIcon', 'mt-4', 'ml-3', 'fa-plus');
 
     ///Added ids
     author.id = 'titleAuthor';
@@ -307,8 +311,10 @@ for (i = 0; i < music.length; i++) {
 
     ///Database value in the elements
     img.src = music[i].img;
-    author.innerHTML = music[i].author;
-    name.innerHTML = music[i].name;
+
+    music[i].author.length > 16 ? author.innerHTML = music[i].author.slice(0, 16) + '...' : author.innerHTML = music[i].author;
+
+    music[i].name.length > 16 ? name.innerHTML = music[i].name.slice(0, 16) + '...' : name.innerHTML = music[i].name;
 
     ///Added elements into html
     container.appendChild(img);
@@ -317,6 +323,7 @@ for (i = 0; i < music.length; i++) {
     divTitle.appendChild(name);
     container.appendChild(divAditional);
     divAditional.appendChild(likeIcon);
+    divAditional.appendChild(addToFavoriteIcon);
     musicCollection.appendChild(container);
 }
 
@@ -324,18 +331,22 @@ const musicCollectionContainer = document.querySelectorAll('.music-collection__c
 const like = document.querySelectorAll('.likeIcon');
 const titleContainer = document.querySelectorAll('.titleContainer');
 const titleImgCollection = document.querySelectorAll('.titleImgCollection');
+const favorite = document.querySelectorAll('.favoriteIcon');
 
 ///Change music on click from playlist
 musicCollectionContainer.forEach((el, id) => {
+
+    ///Change music Function
     const changeMusic = () => {
         activeMusic = id;
         musicInfo();
         musicCtrl(1);
     }
-
+    ///Change music event
     titleContainer[id].addEventListener('click', changeMusic);
     titleImgCollection[id].addEventListener('click', changeMusic);
 
+    ///Like event
     like[id].addEventListener('click', () => {
         if (like[id].className === 'fa likeIcon mt-4 fa-heart-o') {
             like[id].classList.remove('fa-heart-o');
@@ -343,6 +354,17 @@ musicCollectionContainer.forEach((el, id) => {
         } else {
             like[id].classList.remove('fa-heart');
             like[id].classList.add('fa-heart-o');
+        }
+    });
+
+    ///favourite event
+    favorite[id].addEventListener('click', () => {
+        if (favorite[id].className === 'fa favoriteIcon mt-4 ml-3 fa-plus') {
+            favorite[id].classList.remove('fa-plus');
+            favorite[id].classList.add('fa-check');
+        } else {
+            favorite[id].classList.remove('fa-check');
+            favorite[id].classList.add('fa-plus');
         }
     });
 });

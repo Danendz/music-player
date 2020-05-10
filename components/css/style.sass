@@ -96,16 +96,7 @@ progress::-webkit-progress-value
 #volume
     display: none
 
-@media screen and ( min-width: 560px )
-    #volume, .volumeIco
-        display: block
-    .controls-container
-        display: flex
-        &__buttons, &__title-image
-            justify-content: flex-start
-        &__title-image
-            &__titles
-                align-items: flex-start
+
 
 #titleAuthor, #titleName
     transition: .3s
@@ -151,9 +142,6 @@ progress::-webkit-progress-value
     background: #00aeff5d
     border-radius: 15px
 
-.playing 
-    transform: translateX(-100%)
-
 .fa-heart-o
     z-index: 99
     transition: .4s
@@ -165,6 +153,43 @@ progress::-webkit-progress-value
     transition: .3s
     color: #00aeffa9
     font-size: 34.7px
+
+.fa-heart-o:hover
+    color: #00aeffa9
+
+.fa-heart:hover
+    color: #00aeff79
+
+.fa-plus
+    z-index: 99
+    transition: .4s
+    color: #00aeffc0
+    font-size: 35px
+
+.fa-plus:hover
+    color: #00aeffe1
+
+.fa-check
+    z-index: 99
+    transition: .4s
+    color: #00aeffe1
+    font-size: 34.7px
+
+.fa-check:hover
+    color: #00aeffc0
     
 .additional 
+    width: 200px
     z-index: 99
+
+@media screen and ( min-width: 560px )
+    #volume, .volumeIco
+        display: block
+    .controls-container
+        display: flex
+        &__buttons, &__title-image
+            justify-content: flex-start
+        &__title-image
+            &__titles
+                align-items: flex-start
+     
