@@ -216,7 +216,7 @@ setInterval(() => {
                 nextSong();
             });
             navigator.mediaSession.setActionHandler('seekto', function (event) {
-                if (event.fastSeek && ('fastSeek' in audio)) {
+                if (event.fastSeek && ('fastSeek' in myAudio)) {
                     myAudio.fastSeek(event.seekTime);
                     return;
                 }
