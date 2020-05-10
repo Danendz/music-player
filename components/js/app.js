@@ -87,6 +87,7 @@ const musicCtrl = (playStateValue = 0) => {
 
 playBtn.addEventListener('click', () => {
     musicCtrl();
+
 });
 
 const nextSong = () => {
@@ -155,11 +156,8 @@ setInterval(() => {
         progress.value = played;
         volume.value = myAudio.volume;
         buffered.value = loaded;
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: music.name,
-            artist: music.author,
-            artwork: music.img
-        });
+
+
 
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
@@ -240,4 +238,9 @@ volume.addEventListener("click", function (e) {
 mute.addEventListener('click', () => {
     myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
 });
-
+navigator.mediaSession.setActionHandler('previoustrack', function () {
+    previousSong();
+});
+navigator.mediaSession.setActionHandler('nexttrack', function () {
+    nextSong();
+});
