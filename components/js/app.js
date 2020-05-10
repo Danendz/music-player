@@ -208,12 +208,11 @@ setInterval(() => {
                 nextSong();
             });
             navigator.mediaSession.setActionHandler('seekto', function (event) {
-                log('> User clicked "Seek To" icon.');
-                if (event.fastSeek && ('fastSeek' in audio)) {
-                    audio.fastSeek(event.seekTime);
+                if (event.fastSeek && ('fastSeek' in myAudio)) {
+                    myAudio.fastSeek(event.seekTime);
                     return;
                 }
-                audio.currentTime = event.seekTime;
+                myAudio.currentTime = event.seekTime;
             });
         }
     }
