@@ -201,4 +201,12 @@ progress::-webkit-progress-value {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
 }
+
+.music-collection {
+  -webkit-transition: .3s;
+  transition: .3s;
+  width: 100vw;
+  height: 0px;
+  background: #121212;
+}
 /*# sourceMappingURL=style.css.map */

@@ -14,6 +14,8 @@ const effect = document.querySelector('.effect');
 const volume = document.getElementById('volume');
 const mute = document.getElementById('mute');
 const buffered = document.getElementById('buffered');
+const musicCollectionBtn = document.querySelector('.controls-container__title-image');
+const musicCollection = document.querySelector('.music-collection');
 let seeking = false, playState, activeMusic;
 
 const music = [
@@ -189,7 +191,7 @@ setInterval(() => {
                 title: music[activeMusic].name,
                 artist: music[activeMusic].author,
                 artwork: [
-                    { src: music[activeMusic].src }
+                    { src:  '../img/pascal.jpg'}
                 ]
             });
 
@@ -265,4 +267,8 @@ navigator.mediaSession.setActionHandler('seekto', function (event) {
         return;
     }
     audio.currentTime = event.seekTime;
+});
+
+musicCollectionBtn.addEventListener('click', () => {
+    musicCollection.style.height === '50vh' ? musicCollection.style.height = '0vh' : musicCollection.style.height = '50vh';
 })
