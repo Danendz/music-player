@@ -207,6 +207,14 @@ setInterval(() => {
             navigator.mediaSession.setActionHandler('nexttrack', function () {
                 nextSong();
             });
+            navigator.mediaSession.setActionHandler('seekto', function (event) {
+                log('> User clicked "Seek To" icon.');
+                if (event.fastSeek && ('fastSeek' in audio)) {
+                    audio.fastSeek(event.seekTime);
+                    return;
+                }
+                audio.currentTime = event.seekTime;
+            });
         }
     }
 }, 30);
@@ -287,7 +295,7 @@ for (i = 0; i < music.length; i++) {
 }
 const musicCollectionContainer = document.querySelectorAll('.music-collection__container');
 musicCollectionContainer.forEach((el, id) => {
-    musicCollectionContainer[id].addEventListener('click', ()=> {
+    musicCollectionContainer[id].addEventListener('click', () => {
         activeMusic = id;
         musicInfo();
         musicCtrl(1);
