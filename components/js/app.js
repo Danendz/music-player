@@ -145,6 +145,7 @@ document.addEventListener('keydown', (e) => {
     }
 
 });
+
 setInterval(() => {
     if (myAudio.duration > 0) {
         const played = myAudio.currentTime / myAudio.duration * 100;
@@ -154,6 +155,12 @@ setInterval(() => {
         progress.value = played;
         volume.value = myAudio.volume;
         buffered.value = loaded;
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: music.name,
+            artist: music.author,
+            artwork: music.img
+        });
+
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
         }
