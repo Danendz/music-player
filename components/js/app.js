@@ -220,7 +220,7 @@ setInterval(() => {
                     audio.fastSeek(event.seekTime);
                     return;
                 }
-                myAudio.currentTime = event.seekTime;
+                audio.currentTime = event.seekTime;
             });
         }
     }
