@@ -171,6 +171,11 @@ setInterval(() => {
         progress.value = played;
         volume.value = myAudio.volume;
         buffered.value = loaded;
+        navigator.mediaSession.setPositionState({
+            duration: myAudio.duration,
+            playbackRate: myAudio.playbackRate,
+            position: myAudio.currentTime
+        });
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
         }
