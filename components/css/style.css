@@ -228,7 +228,7 @@ progress::-webkit-progress-value {
 .titleImgCollection {
   -webkit-transition: .5s;
   transition: .5s;
-  border-radius: 25px;
+  border-radius: 15px;
   width: 75px;
   height: 75px;
 }

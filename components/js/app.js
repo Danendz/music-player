@@ -16,6 +16,7 @@ const mute = document.getElementById('mute');
 const buffered = document.getElementById('buffered');
 const musicCollectionBtn = document.querySelector('.controls-container__title-image');
 const musicCollection = document.querySelector('.music-collection');
+
 let seeking = false, playState, activeMusic;
 
 const music = [
@@ -289,3 +290,11 @@ for (i = 0; i < music.length; i++) {
     container.appendChild(divTitle)
     musicCollection.appendChild(container);
 }
+const musicCollectionContainer = document.querySelectorAll('.music-collection__container');
+musicCollectionContainer.forEach((el, id) => {
+    musicCollectionContainer[id].addEventListener('click', ()=> {
+        activeMusic = id;
+        musicInfo();
+        musicCtrl(1);
+    });
+});
