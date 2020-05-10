@@ -52,6 +52,7 @@ progress::-webkit-progress-value
     height: 3.2vh
 
 .titleImg
+    transition: .5s
     border-radius: 25px
     width: 50px
     height: 50px
@@ -108,5 +109,17 @@ progress::-webkit-progress-value
     #volume, .volumeIco
         display: block
 
+#titleAuthor, #titleName
+    transition: .3s
+    color: #b6e7fd
+    cursor: pointer
 
-  
+#titleAuthor:hover, #titleName:hover
+    color: #92ddff
+
+.controls-container__title-image
+    transition: .5s
+    cursor: pointer
+
+.controls-container__title-image:hover
+    transform: scale(1.1)

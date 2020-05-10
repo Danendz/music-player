@@ -70,6 +70,8 @@ progress::-webkit-progress-value {
 }
 
 .titleImg {
+  -webkit-transition: .5s;
+  transition: .5s;
   border-radius: 25px;
   width: 50px;
   height: 50px;
@@ -176,5 +178,27 @@ progress::-webkit-progress-value {
   #volume, .volumeIco {
     display: block;
   }
+}
+
+#titleAuthor, #titleName {
+  -webkit-transition: .3s;
+  transition: .3s;
+  color: #b6e7fd;
+  cursor: pointer;
+}
+
+#titleAuthor:hover, #titleName:hover {
+  color: #92ddff;
+}
+
+.controls-container__title-image {
+  -webkit-transition: .5s;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.controls-container__title-image:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 /*# sourceMappingURL=style.css.map */
