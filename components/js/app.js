@@ -10,7 +10,6 @@ const progressBar = document.querySelector('.progressBar');
 const titleAuthor = document.getElementById('titleAuthor');
 const titleName = document.getElementById('titleName');
 const titleImg = document.querySelector('.titleImg');
-const effect = document.querySelector('.effect');
 const volume = document.getElementById('volume');
 const mute = document.getElementById('mute');
 const buffered = document.getElementById('buffered');
@@ -168,13 +167,9 @@ setInterval(() => {
         if (myAudio.paused) {
             play(0, 'fa-pause', 'fa-play');
             titleImg.classList.remove('titleImgAnim');
-            effect.style.width = '0px'
-            effect.style.height = '0px'
         } else {
             play(1, 'fa-play', 'fa-pause');
             titleImg.classList.add('titleImgAnim');
-            effect.style.width = '10px'
-            effect.style.height = '10px'
         }
         if (myAudio.volume === 0) {
             mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
