@@ -66,23 +66,6 @@ progress::-webkit-progress-value
     100%
         transform: rotate(360deg)
 
-.effect
-    position: relative
-    width: 0px
-    height: 0px
-    transition: .3s 
-    border-radius: 25px
-    background: #00aeffa9  
-    margin-top: 18px
-    animation: scaleAnim .4s infinite
-
-
-@keyframes scaleAnim
-    0%
-        transform: scale(1)
-    100%
-        transform: scale(1.2)
-
 .volumeIco
     font-size: 30px
     transition: .3s
@@ -95,8 +78,6 @@ progress::-webkit-progress-value
 
 #volume
     display: none
-
-
 
 #titleAuthor, #titleName
     transition: .3s
@@ -129,8 +110,8 @@ progress::-webkit-progress-value
 .titleImgCollection
     transition: .5s
     border-radius: 15px
-    width: 75px
-    height: 75px
+    width: 60px
+    height: 60px
 
 ::-webkit-scrollbar
     width: 3px
@@ -158,7 +139,7 @@ progress::-webkit-progress-value
     color: #00aeffa9
 
 .fa-heart:hover
-    color: #00aeff79
+    color: #00aeffe3
 
 .fa-plus
     z-index: 99
@@ -167,7 +148,7 @@ progress::-webkit-progress-value
     font-size: 35px
 
 .fa-plus:hover
-    color: #00aeffe1
+    color: #00aeffe3
 
 .fa-check
     z-index: 99
@@ -176,11 +157,37 @@ progress::-webkit-progress-value
     font-size: 34.7px
 
 .fa-check:hover
-    color: #00aeffc0
+    color: #00aeffe3
     
 .additional 
     width: 200px
     z-index: 99
+
+.fa-play-circle
+    transition: .3s
+    color: #00aeffe1
+    margin-left: 27px
+    margin-top: 7px
+    font-size: 45px
+    opacity: 0
+
+
+@keyframes scaleAnim
+    0%
+        transform: scale(1)
+    100%
+        transform: scale(1.1)
+
+.activePlay
+    opacity: 1
+
+.activeNow
+    animation: scaleAnim .4s infinite
+
+.activeContainer
+    transition: .3s
+    border: 1px solid #00aeffe1;
+    border-radius: 15px
 
 @media screen and ( min-width: 560px )
     #volume, .volumeIco

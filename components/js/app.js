@@ -171,6 +171,19 @@ setInterval(() => {
         progress.value = played;
         volume.value = myAudio.volume;
         buffered.value = loaded;
+        if (previousActiveMusic !== undefined) {
+            if (activeMusic !== previousActiveMusic) {
+                playBtnIcon[previousActiveMusic].classList.remove('activePlay');
+                musicCollectionContainer[previousActiveMusic].classList.remove('activeContainer');
+                previousActiveMusic = activeMusic;
+            }
+        }
+        if (activeMusic === activeMusic) {
+            playBtnIcon[activeMusic].classList.add('activePlay');
+            musicCollectionContainer[activeMusic].classList.add('activeContainer');
+            previousActiveMusic = activeMusic;
+        }
+        playState === 1 ? playBtnIcon[activeMusic].classList.add('activeNow') : playBtnIcon[activeMusic].classList.remove('activeNow');
         if (myAudio.currentTime === myAudio.duration) {
             nextSong();
         }
@@ -290,24 +303,27 @@ musicCollectionBtn.addEventListener('click', () => {
 for (i = 0; i < music.length; i++) {
 
     ///Create playlist elements
+    ///containers
     const container = document.createElement('div');
     const divTitle = document.createElement('div');
     const divAditional = document.createElement('div');
+    ///elements
     const likeIcon = document.createElement('i');
     const addToFavoriteIcon = document.createElement('i');
+    const playBtnIco = document.createElement('i');
     const img = document.createElement('img');
     const author = document.createElement('span');
     const name = document.createElement('span');
 
     ///Added classes
-    container.classList.add('d-flex', 'music-collection__container', 'pt-3', 'pb-3');
+    container.classList.add('d-flex', 'music-collection__container', 'pt-2', 'pb-2');
     divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100', 'titleContainer');
     divAditional.classList.add('d-flex', 'flex-row', 'additional');
     img.classList.add('titleImgCollection', 'ml-3');
-    author.classList.add('pt-3', 'pb-1');
-    likeIcon.classList.add('fa', 'likeIcon', 'mt-4', 'fa-heart-o');
-    addToFavoriteIcon.classList.add('fa', 'favoriteIcon', 'mt-4', 'ml-3', 'fa-plus');
-
+    author.classList.add('pt-1', 'pb-2');
+    likeIcon.classList.add('fa', 'likeIcon', 'mt-3', 'fa-heart-o');
+    addToFavoriteIcon.classList.add('fa', 'favoriteIcon', 'mt-3', 'ml-3', 'fa-plus');
+    playBtnIco.classList.add('fa', 'fa-play-circle', 'position-absolute');
     ///Added ids
     author.id = 'titleAuthor';
     name.id = 'titleName';
@@ -320,6 +336,7 @@ for (i = 0; i < music.length; i++) {
     music[i].name.length > 16 ? name.innerHTML = music[i].name.slice(0, 16) + '...' : name.innerHTML = music[i].name;
 
     ///Added elements into html
+    container.appendChild(playBtnIco);
     container.appendChild(img);
     container.appendChild(divTitle);
     divTitle.appendChild(author);
@@ -335,6 +352,8 @@ const like = document.querySelectorAll('.likeIcon');
 const titleContainer = document.querySelectorAll('.titleContainer');
 const titleImgCollection = document.querySelectorAll('.titleImgCollection');
 const favorite = document.querySelectorAll('.favoriteIcon');
+const playBtnIcon = document.querySelectorAll('.fa-play-circle');
+let previousActiveMusic;
 
 ///Change music on click from playlist
 musicCollectionContainer.forEach((el, id) => {
@@ -344,14 +363,32 @@ musicCollectionContainer.forEach((el, id) => {
         activeMusic = id;
         musicInfo();
         musicCtrl(1);
+
+        myAudio.play();
     }
+
+    ///Mouse hover effect
+    musicCollectionContainer[id].addEventListener('mouseenter', () => {
+        if (activeMusic !== id) {
+            playBtnIcon[id].classList.add('activePlay');
+            musicCollectionContainer[id].classList.add('activeContainer');
+        }
+    });
+
+    musicCollectionContainer[id].addEventListener('mouseleave', () => {
+        if (activeMusic !== id) {
+            playBtnIcon[id].classList.remove('activePlay');
+            musicCollectionContainer[id].classList.remove('activeContainer');
+        }
+    });
+
     ///Change music event
-    titleContainer[id].addEventListener('click', changeMusic);
     titleImgCollection[id].addEventListener('click', changeMusic);
+    playBtnIcon[id].addEventListener('click', changeMusic);
 
     ///Like event
     like[id].addEventListener('click', () => {
-        if (like[id].className === 'fa likeIcon mt-4 fa-heart-o') {
+        if (like[id].className === 'fa likeIcon mt-3 fa-heart-o') {
             like[id].classList.remove('fa-heart-o');
             like[id].classList.add('fa-heart');
         } else {
@@ -362,7 +399,7 @@ musicCollectionContainer.forEach((el, id) => {
 
     ///favourite event
     favorite[id].addEventListener('click', () => {
-        if (favorite[id].className === 'fa favoriteIcon mt-4 ml-3 fa-plus') {
+        if (favorite[id].className === 'fa favoriteIcon mt-3 ml-3 fa-plus') {
             favorite[id].classList.remove('fa-plus');
             favorite[id].classList.add('fa-check');
         } else {

@@ -104,41 +104,6 @@ progress::-webkit-progress-value {
   }
 }
 
-.effect {
-  position: relative;
-  width: 0px;
-  height: 0px;
-  -webkit-transition: .3s;
-  transition: .3s;
-  border-radius: 25px;
-  background: #00aeffa9;
-  margin-top: 18px;
-  -webkit-animation: scaleAnim .4s infinite;
-          animation: scaleAnim .4s infinite;
-}
-
-@-webkit-keyframes scaleAnim {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-}
-
-@keyframes scaleAnim {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  100% {
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
-  }
-}
-
 .volumeIco {
   font-size: 30px;
   -webkit-transition: .3s;
@@ -200,8 +165,8 @@ progress::-webkit-progress-value {
   -webkit-transition: .5s;
   transition: .5s;
   border-radius: 15px;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
 }
 
 ::-webkit-scrollbar {
@@ -238,7 +203,7 @@ progress::-webkit-progress-value {
 }
 
 .fa-heart:hover {
-  color: #00aeff79;
+  color: #00aeffe3;
 }
 
 .fa-plus {
@@ -250,7 +215,7 @@ progress::-webkit-progress-value {
 }
 
 .fa-plus:hover {
-  color: #00aeffe1;
+  color: #00aeffe3;
 }
 
 .fa-check {
@@ -262,12 +227,60 @@ progress::-webkit-progress-value {
 }
 
 .fa-check:hover {
-  color: #00aeffc0;
+  color: #00aeffe3;
 }
 
 .additional {
   width: 200px;
   z-index: 99;
+}
+
+.fa-play-circle {
+  -webkit-transition: .3s;
+  transition: .3s;
+  color: #00aeffe1;
+  margin-left: 27px;
+  margin-top: 7px;
+  font-size: 45px;
+  opacity: 0;
+}
+
+@-webkit-keyframes scaleAnim {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+}
+
+@keyframes scaleAnim {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+}
+
+.activePlay {
+  opacity: 1;
+}
+
+.activeNow {
+  -webkit-animation: scaleAnim .4s infinite;
+          animation: scaleAnim .4s infinite;
+}
+
+.activeContainer {
+  -webkit-transition: .3s;
+  transition: .3s;
+  border: 1px solid #00aeffe1;
+  border-radius: 15px;
 }
 
 @media screen and (min-width: 560px) {
