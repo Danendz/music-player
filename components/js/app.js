@@ -175,6 +175,7 @@ setInterval(() => {
             if (activeMusic !== previousActiveMusic) {
                 playBtnIcon[previousActiveMusic].classList.remove('activePlay');
                 musicCollectionContainer[previousActiveMusic].classList.remove('activeContainer');
+                playBtnIcon[previousActiveMusic].classList.remove('activeNow');
                 previousActiveMusic = activeMusic;
             }
         }
