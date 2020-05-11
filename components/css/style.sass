@@ -10,7 +10,7 @@
     color: #ffffff9a
     font-size: 0.8rem
     
-#play, #next, #back, #reply
+#play, #next, #back, #reply, #random
     transition: .1.5s
     background-color: transparent
     border: 0
@@ -18,17 +18,6 @@
     cursor: pointer
     outline: none
     font-size: 1.9rem
-
-
-
-#random
-    transition: .1.5s
-    background-color: transparent
-    border: 0
-    color: gray
-    cursor: pointer
-    outline: none
-    font-size: 1.8rem
 
 #play:hover, #next:hover, #back:hover, #reply:hover, #random:hover
     color: white
@@ -208,8 +197,10 @@ progress::-webkit-progress-value
     transition: .3s
     border: 1px solid #00aeffe1;
     border-radius: 15px
+
 .activeBtn
     color: #00aeffe1
+
 @media screen and ( min-width: 560px )
     #volume, .volumeIco
         display: block

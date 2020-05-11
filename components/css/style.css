@@ -14,7 +14,7 @@
   font-size: 0.8rem;
 }
 
-#play, #next, #back, #reply {
+#play, #next, #back, #reply, #random {
   -webkit-transition: 0.1 0.5s;
   transition: 0.1 0.5s;
   background-color: transparent;
@@ -23,17 +23,6 @@
   cursor: pointer;
   outline: none;
   font-size: 1.9rem;
-}
-
-#random {
-  -webkit-transition: 0.1 0.5s;
-  transition: 0.1 0.5s;
-  background-color: transparent;
-  border: 0;
-  color: gray;
-  cursor: pointer;
-  outline: none;
-  font-size: 1.8rem;
 }
 
 #play:hover, #next:hover, #back:hover, #reply:hover, #random:hover {

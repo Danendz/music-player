@@ -417,7 +417,6 @@ const titleContainer = document.querySelectorAll('.titleContainer');
 const titleImgCollection = document.querySelectorAll('.titleImgCollection');
 const favorite = document.querySelectorAll('.favoriteIcon');
 const playBtnIcon = document.querySelectorAll('.fa-play-circle');
-const replyBtnIcon = document.querySelectorAll('.fa-reply-all');
 let previousActiveMusic;
 
 ///Change music on click from playlist
@@ -471,6 +470,4 @@ musicCollectionContainer.forEach((el, id) => {
             favorite[id].classList.add('fa-plus');
         }
     });
-
-
 });
