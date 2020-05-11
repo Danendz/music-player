@@ -306,6 +306,7 @@ for (i = 0; i < music.length; i++) {
     ///Create playlist elements
     ///containers
     const container = document.createElement('div');
+    const divImg = document.createElement('div');
     const divTitle = document.createElement('div');
     const divAditional = document.createElement('div');
     ///elements
@@ -318,6 +319,7 @@ for (i = 0; i < music.length; i++) {
 
     ///Added classes
     container.classList.add('d-flex', 'music-collection__container', 'pt-2', 'pb-2');
+    divImg.classList.add('position-relative');
     divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100', 'titleContainer');
     divAditional.classList.add('d-flex', 'flex-row', 'additional');
     img.classList.add('titleImgCollection', 'ml-3');
@@ -337,8 +339,9 @@ for (i = 0; i < music.length; i++) {
     music[i].name.length > 16 ? name.innerHTML = music[i].name.slice(0, 16) + '...' : name.innerHTML = music[i].name;
 
     ///Added elements into html
-    container.appendChild(playBtnIco);
-    container.appendChild(img);
+    divImg.appendChild(playBtnIco);
+    divImg.appendChild(img);
+    container.appendChild(divImg);
     container.appendChild(divTitle);
     divTitle.appendChild(author);
     divTitle.appendChild(name);
