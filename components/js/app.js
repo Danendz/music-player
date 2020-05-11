@@ -214,11 +214,11 @@ document.addEventListener('keydown', (e) => {
     }
 
 });
-
+let add = 0;
 ///The live update for music(maybe it was not a good idea to do this)
 setInterval(() => {
     if (myAudio.duration > 0) {
-
+        
         const played = myAudio.currentTime / myAudio.duration * 100;
         const loaded = myAudio.buffered.end(0) / myAudio.duration * 100;
 
@@ -235,13 +235,16 @@ setInterval(() => {
                 musicCollectionContainer[previousActiveMusic].classList.remove('activeContainer');
                 playBtnIcon[previousActiveMusic].classList.remove('activeNow');
                 previousActiveMusic = activeMusic;
+                add--;
+                console.log(add);
             }
         }
-
-        if (activeMusic === activeMusic) {
+        
+        if (activeMusic === activeMusic && add === 0) {
             playBtnIcon[activeMusic].classList.add('activePlay');
             musicCollectionContainer[activeMusic].classList.add('activeContainer');
             previousActiveMusic = activeMusic;
+            add++;
         }
 
         playState === 1 ? playBtnIcon[activeMusic].classList.add('activeNow') : playBtnIcon[activeMusic].classList.remove('activeNow');
