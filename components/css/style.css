@@ -35,7 +35,7 @@
   -webkit-transition: .5s;
   transition: .5s;
   width: 100vw;
-  height: 1.9vh;
+  height: 13px;
   background: transparent;
   background: transparent;
   cursor: pointer;
@@ -58,15 +58,15 @@ progress::-webkit-progress-value {
 }
 
 .progressBar:hover > #timeAudio {
-  font-size: 1.1rem;
+  font-size: 0.88rem;
 }
 
 .progressBar:hover > #durationAudio {
-  font-size: 1.1rem;
+  font-size: 0.88rem;
 }
 
 .progressBar:hover > .progress {
-  height: 3.2vh;
+  height: 13px;
 }
 
 .titleImg {
@@ -119,6 +119,10 @@ progress::-webkit-progress-value {
 
 #volume {
   display: none;
+}
+
+.progress-volume {
+  height: 14px;
 }
 
 #titleAuthor, #titleName {
