@@ -113,16 +113,20 @@ const nextSong = () => {
             musicInfo();
             musicCtrl(1);
         }
-        else activeMusic = 0;
-
-        if (reply === 0 && random !== 1) musicCtrl(0);
-        else if (reply === 1) musicCtrl(1);
         else {
-            musicInfo(); 
+            activeMusic = 0;
+            musicInfo();
+            musicCtrl(1);
+        }
+        
+        if (reply === 1) musicCtrl(1);
+        else if (reply === 2) {
+            musicInfo();
             myAudio.currentTime = 0;
         }
-    } else {
-        random === 1 ? Math.floor(Math.random() * music.length - 1) + 1 : activeMusic++;
+    } 
+    else {
+        random === 1 ? activeMusic = Math.floor(Math.random() * music.length - 1) + 1 : activeMusic++;
         musicInfo();
         musicCtrl(1);
     }
