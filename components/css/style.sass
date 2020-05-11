@@ -10,7 +10,7 @@
     color: #ffffff9a
     font-size: 0.8rem
     
-#play, #next, #back
+#play, #next, #back, #reply
     transition: .1.5s
     background-color: transparent
     border: 0
@@ -19,9 +19,20 @@
     outline: none
     font-size: 1.9rem
 
-#play:hover, #next:hover, #back:hover
+
+
+#random
+    transition: .1.5s
+    background-color: transparent
+    border: 0
+    color: gray
+    cursor: pointer
+    outline: none
+    font-size: 1.8rem
+
+#play:hover, #next:hover, #back:hover, #reply:hover, #random:hover
     color: white
-    transform: scale(1.01)
+    transform: scale(1.02)
 
 .progress
     transition: .5s
@@ -175,6 +186,12 @@ progress::-webkit-progress-value
     opacity: 0
 
 
+
+.replyOnce::after
+    content: '1'
+    font-size: 0.9rem
+    font-weight: 900
+
 @keyframes scaleAnim
     0%
         transform: scale(1)
@@ -191,7 +208,8 @@ progress::-webkit-progress-value
     transition: .3s
     border: 1px solid #00aeffe1;
     border-radius: 15px
-
+.activeBtn
+    color: #00aeffe1
 @media screen and ( min-width: 560px )
     #volume, .volumeIco
         display: block

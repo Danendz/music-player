@@ -3,6 +3,10 @@ const durationAudio = document.getElementById('durationAudio');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
 const backBtn = document.getElementById('back');
+const replyBtn = document.getElementById('reply');
+const replyFa = document.querySelector('.fa-retweet');
+const randomBtn = document.getElementById('random');
+const randomFa = document.querySelector('.fa-random');
 const timeAudio = document.getElementById('timeAudio');
 const playFa = document.querySelector('.fa-play');
 const progress = document.getElementById('progress');
@@ -16,7 +20,7 @@ const buffered = document.getElementById('buffered');
 const musicCollectionBtn = document.querySelector('.controls-container__title-image');
 const musicCollection = document.querySelector('.music-collection');
 
-let seeking = false, playState, activeMusic;
+let seeking = false, playState, activeMusic, reply = 0, random = 0;
 
 ///Pseudo database
 const music = [
@@ -104,15 +108,61 @@ playBtn.addEventListener('click', () => {
 ///Next song function
 const nextSong = () => {
     if (activeMusic === music.length - 1) {
-        activeMusic = 0;
-        musicInfo();
-        musicCtrl(1);
+        if (random === 1) {
+            activeMusic = Math.floor(Math.random() * music.length - 1) + 1;
+            musicInfo();
+            musicCtrl(1);
+        }
+        else activeMusic = 0;
+
+        if (reply === 0 && random !== 1) musicCtrl(0);
+        else if (reply === 1) musicCtrl(1);
+        else {
+            musicInfo(); 
+            myAudio.currentTime = 0;
+        }
     } else {
-        activeMusic++;
+        random === 1 ? Math.floor(Math.random() * music.length - 1) + 1 : activeMusic++;
         musicInfo();
         musicCtrl(1);
     }
 }
+
+///Reply button
+replyBtn.addEventListener('click', () => {
+    if (reply === 0) {
+        replyFa.classList.add('activeBtn');
+        reply = 1;
+
+        randomFa.classList.remove('activeBtn');
+        random = 0;
+    } else if (reply === 1) {
+        replyFa.classList.add('replyOnce');
+        reply = 2;
+
+        randomFa.classList.remove('activeBtn');
+        random = 0;
+    } else {
+        replyFa.classList.remove('replyOnce');
+        replyFa.classList.remove('activeBtn');
+        reply = 0;
+    }
+});
+
+///Random button
+randomBtn.addEventListener('click', () => {
+    if (random === 0) {
+        randomFa.classList.add('activeBtn');
+        random = 1;
+
+        replyFa.classList.remove('replyOnce');
+        replyFa.classList.remove('activeBtn');
+        reply = 0;
+    } else {
+        randomFa.classList.remove('activeBtn');
+        random = 0;
+    }
+});
 
 //Previous song function
 const previousSong = () => {
@@ -164,13 +214,17 @@ document.addEventListener('keydown', (e) => {
 ///The live update for music(maybe it was not a good idea to do this)
 setInterval(() => {
     if (myAudio.duration > 0) {
+
         const played = myAudio.currentTime / myAudio.duration * 100;
         const loaded = myAudio.buffered.end(0) / myAudio.duration * 100;
+
         timeMath(myAudio.currentTime, timeAudio);
         timeMath(myAudio.duration, durationAudio);
+
         progress.value = played;
         volume.value = myAudio.volume;
         buffered.value = loaded;
+
         if (previousActiveMusic !== undefined) {
             if (activeMusic !== previousActiveMusic) {
                 playBtnIcon[previousActiveMusic].classList.remove('activePlay');
@@ -179,15 +233,19 @@ setInterval(() => {
                 previousActiveMusic = activeMusic;
             }
         }
+
         if (activeMusic === activeMusic) {
             playBtnIcon[activeMusic].classList.add('activePlay');
             musicCollectionContainer[activeMusic].classList.add('activeContainer');
             previousActiveMusic = activeMusic;
         }
+
         playState === 1 ? playBtnIcon[activeMusic].classList.add('activeNow') : playBtnIcon[activeMusic].classList.remove('activeNow');
+
         if (myAudio.currentTime === myAudio.duration) {
-            nextSong();
+            reply === 2 ? (myAudio.currentTime = 0, myAudio.play()) : nextSong();
         }
+
         if (myAudio.paused) {
             play(0, 'fa-pause', 'fa-play');
             titleImg.classList.remove('titleImgAnim');
@@ -195,6 +253,7 @@ setInterval(() => {
             play(1, 'fa-play', 'fa-pause');
             titleImg.classList.add('titleImgAnim');
         }
+
         if (myAudio.volume === 0) {
             mute.classList.remove('fa-volume-up', 'mr-3', 'fa-volume-down');
             mute.classList.add('fa-volume-off', 'mr-4');
@@ -206,8 +265,8 @@ setInterval(() => {
         } else {
             mute.classList.remove('fa-volume-down', 'mr-4', 'fa-volume-off');
             mute.classList.add('fa-volume-up', 'mr-3');
-
         }
+
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: music[activeMusic].name,
@@ -240,6 +299,7 @@ setInterval(() => {
                 myAudio.currentTime = event.seekTime;
             });
         }
+
     }
 }, 30);
 
@@ -357,6 +417,7 @@ const titleContainer = document.querySelectorAll('.titleContainer');
 const titleImgCollection = document.querySelectorAll('.titleImgCollection');
 const favorite = document.querySelectorAll('.favoriteIcon');
 const playBtnIcon = document.querySelectorAll('.fa-play-circle');
+const replyBtnIcon = document.querySelectorAll('.fa-reply-all');
 let previousActiveMusic;
 
 ///Change music on click from playlist
@@ -367,7 +428,6 @@ musicCollectionContainer.forEach((el, id) => {
         activeMusic = id;
         musicInfo();
         musicCtrl(1);
-
         myAudio.play();
     }
 
@@ -411,4 +471,6 @@ musicCollectionContainer.forEach((el, id) => {
             favorite[id].classList.add('fa-plus');
         }
     });
+
+
 });
