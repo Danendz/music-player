@@ -73,14 +73,29 @@ progress::-webkit-progress-value
     cursor: pointer
     display: none
 
-.volumeIco:hover
+.volumeShow
+    font-size: 28px
+    transition: .3s
+    color: #ffffff8c
+    cursor: pointer
+    display: none
+
+.progress-volume
+    transition: .4s
+    height: 14px
+    border: 1px solid #00aeff3a
+    box-shadow: 0px 0px 5px #00aeff25
+    border-radius: 25px
+    width: 25%
+    transform: scaleX(0)
+    transform-origin: right
+    
+.volumeIco:hover, .volumeShow:hover
     color: #ffffffe0
 
 #volume
     display: none
-
-.progress-volume
-    height: 14px
+    
 
 #titleAuthor, #titleName
     transition: .3s
@@ -200,8 +215,8 @@ progress::-webkit-progress-value
 .activeBtn
     color: #00aeffe1
 
-@media screen and ( min-width: 560px )
-    #volume, .volumeIco
+@media screen and ( min-width: 680px )
+    #volume, .volumeIco, .volumeShow
         display: block
     .controls-container
         display: flex

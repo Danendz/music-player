@@ -19,6 +19,8 @@ const mute = document.getElementById('mute');
 const buffered = document.getElementById('buffered');
 const musicCollectionBtn = document.querySelector('.controls-container__title-image');
 const musicCollection = document.querySelector('.music-collection');
+const volumeProgress = document.querySelector('.progress-volume');
+const volumeShow = document.querySelector('.volumeShow');
 
 let seeking = false, playState, activeMusic, reply = 0, random = 0, previousActiveMusic;
 
@@ -413,8 +415,30 @@ volume.addEventListener("click", function (e) {
 
 ///Mute music on click to volume icon
 mute.addEventListener('click', () => {
-    myAudio.volume > 0 ? (mute.classList.remove('fa-volume-up', 'mr-3'), mute.classList.add('fa-volume-off', 'mr-4'), myAudio.volume = 0) : (myAudio.muted = false, mute.classList.remove('fa-volume-off', 'mr-4'), mute.classList.add('fa-volume-up', 'mr-3'), myAudio.volume = 1);
+    if (myAudio.volume > 0) {
+        mute.classList.remove('fa-volume-up', 'mr-3');
+        mute.classList.add('fa-volume-off', 'mr-4');
+        myAudio.volume = 0
+    } else {
+        mute.classList.remove('fa-volume-off', 'mr-4')
+        mute.classList.add('fa-volume-up', 'mr-3')
+        myAudio.volume = 1;
+    }
 });
+volumeProgress.style.transform = 'scaleX(0)';
+volumeShow.addEventListener('click', () => {
+    if(volumeProgress.style.transform === 'scaleX(0)'){
+        volumeProgress.style.transform = 'scaleX(1.0)';
+        volumeShow.classList.remove('fa-angle-left');
+        volumeShow.classList.add('fa-angle-right');
+
+    }else{
+        volumeProgress.style.transform = 'scaleX(0)';
+        volumeShow.classList.remove('fa-angle-right');
+        volumeShow.classList.add('fa-angle-left');
+
+    }
+})
 
 ///Playlist open and close
 musicCollectionBtn.addEventListener('click', () => {

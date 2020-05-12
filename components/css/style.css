@@ -113,16 +113,36 @@ progress::-webkit-progress-value {
   display: none;
 }
 
-.volumeIco:hover {
+.volumeShow {
+  font-size: 28px;
+  -webkit-transition: .3s;
+  transition: .3s;
+  color: #ffffff8c;
+  cursor: pointer;
+  display: none;
+}
+
+.progress-volume {
+  -webkit-transition: .4s;
+  transition: .4s;
+  height: 14px;
+  border: 1px solid #00aeff3a;
+  -webkit-box-shadow: 0px 0px 5px #00aeff25;
+          box-shadow: 0px 0px 5px #00aeff25;
+  border-radius: 25px;
+  width: 25%;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: right;
+          transform-origin: right;
+}
+
+.volumeIco:hover, .volumeShow:hover {
   color: #ffffffe0;
 }
 
 #volume {
   display: none;
-}
-
-.progress-volume {
-  height: 14px;
 }
 
 #titleAuthor, #titleName {
@@ -299,8 +319,8 @@ progress::-webkit-progress-value {
   color: #00aeffe1;
 }
 
-@media screen and (min-width: 560px) {
-  #volume, .volumeIco {
+@media screen and (min-width: 680px) {
+  #volume, .volumeIco, .volumeShow {
     display: block;
   }
   .controls-container {
