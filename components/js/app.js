@@ -20,7 +20,7 @@ const buffered = document.getElementById('buffered');
 const musicCollectionBtn = document.querySelector('.controls-container__title-image');
 const musicCollection = document.querySelector('.music-collection');
 
-let seeking = false, playState, activeMusic, reply = 0, random = 0;
+let seeking = false, playState, activeMusic, reply = 0, random = 0, previousActiveMusic;
 
 ///Pseudo database
 const music = [
@@ -49,11 +49,82 @@ const music = [
         img: './components/img/lil_nas.jpg'
     }
 ];
+///loop for playlist
+for (i = 0; i < music.length; i++) {
 
+    ///Create playlist elements
+    ///containers
+    const container = document.createElement('div');
+    const divImg = document.createElement('div');
+    const divTitle = document.createElement('div');
+    const divAditional = document.createElement('div');
+    ///elements
+    const likeIcon = document.createElement('i');
+    const addToFavoriteIcon = document.createElement('i');
+    const playBtnIco = document.createElement('i');
+    const img = document.createElement('img');
+    const author = document.createElement('span');
+    const name = document.createElement('span');
+
+    ///Added classes
+    container.classList.add('d-flex', 'music-collection__container', 'pt-2', 'pb-2');
+    divImg.classList.add('position-relative');
+    divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100', 'titleContainer');
+    divAditional.classList.add('d-flex', 'flex-row', 'additional');
+    img.classList.add('titleImgCollection', 'ml-3');
+    author.classList.add('pt-1', 'pb-2');
+    likeIcon.classList.add('fa', 'likeIcon', 'mt-3', 'fa-heart-o');
+    addToFavoriteIcon.classList.add('fa', 'favoriteIcon', 'mt-3', 'ml-3', 'fa-plus');
+    playBtnIco.classList.add('fa', 'fa-play-circle', 'position-absolute');
+    ///Added ids
+    author.id = 'titleAuthor';
+    name.id = 'titleName';
+
+    ///Database value in the elements
+    img.src = music[i].img;
+
+    music[i].author.length > 16 ? author.innerHTML = music[i].author.slice(0, 16) + '...' : author.innerHTML = music[i].author;
+
+    music[i].name.length > 16 ? name.innerHTML = music[i].name.slice(0, 16) + '...' : name.innerHTML = music[i].name;
+
+    ///Added elements into html
+    divImg.appendChild(playBtnIco);
+    divImg.appendChild(img);
+    container.appendChild(divImg);
+    container.appendChild(divTitle);
+    divTitle.appendChild(author);
+    divTitle.appendChild(name);
+    container.appendChild(divAditional);
+    divAditional.appendChild(likeIcon);
+    divAditional.appendChild(addToFavoriteIcon);
+    musicCollection.appendChild(container);
+}
+
+const musicCollectionContainer = document.querySelectorAll('.music-collection__container');
+const like = document.querySelectorAll('.likeIcon');
+const titleContainer = document.querySelectorAll('.titleContainer');
+const titleImgCollection = document.querySelectorAll('.titleImgCollection');
+const favorite = document.querySelectorAll('.favoriteIcon');
+const playBtnIcon = document.querySelectorAll('.fa-play-circle');
 ///Music live info
 const musicInfo = () => {
     myAudio.src = music[activeMusic].src;
     titleImg.src = music[activeMusic].img;
+
+    if (previousActiveMusic !== undefined) {
+        if (activeMusic !== previousActiveMusic) {
+            playBtnIcon[previousActiveMusic].classList.remove('activePlay');
+            musicCollectionContainer[previousActiveMusic].classList.remove('activeContainer');
+            playBtnIcon[previousActiveMusic].classList.remove('activeNow');
+            previousActiveMusic = activeMusic;
+        }
+    }
+
+    if (activeMusic === activeMusic) {
+        playBtnIcon[activeMusic].classList.add('activePlay');
+        musicCollectionContainer[activeMusic].classList.add('activeContainer');
+        previousActiveMusic = activeMusic;
+    }
 
     music[activeMusic].author.length > 16 ? titleAuthor.textContent = music[activeMusic].author.slice(0, 16) + '...' : titleAuthor.textContent = music[activeMusic].author;
 
@@ -118,13 +189,13 @@ const nextSong = () => {
             musicInfo();
             musicCtrl(1);
         }
-        
+
         if (reply === 1) musicCtrl(1);
         else if (reply === 2) {
             musicInfo();
             myAudio.currentTime = 0;
         }
-    } 
+    }
     else {
         random === 1 ? activeMusic = Math.floor(Math.random() * music.length - 1) + 1 : activeMusic++;
         musicInfo();
@@ -214,11 +285,10 @@ document.addEventListener('keydown', (e) => {
     }
 
 });
-let add = 0;
 ///The live update for music(maybe it was not a good idea to do this)
 setInterval(() => {
     if (myAudio.duration > 0) {
-        
+
         const played = myAudio.currentTime / myAudio.duration * 100;
         const loaded = myAudio.buffered.end(0) / myAudio.duration * 100;
 
@@ -228,24 +298,6 @@ setInterval(() => {
         progress.value = played;
         volume.value = myAudio.volume;
         buffered.value = loaded;
-
-        if (previousActiveMusic !== undefined) {
-            if (activeMusic !== previousActiveMusic) {
-                playBtnIcon[previousActiveMusic].classList.remove('activePlay');
-                musicCollectionContainer[previousActiveMusic].classList.remove('activeContainer');
-                playBtnIcon[previousActiveMusic].classList.remove('activeNow');
-                previousActiveMusic = activeMusic;
-                add--;
-                console.log(add);
-            }
-        }
-        
-        if (activeMusic === activeMusic && add === 0) {
-            playBtnIcon[activeMusic].classList.add('activePlay');
-            musicCollectionContainer[activeMusic].classList.add('activeContainer');
-            previousActiveMusic = activeMusic;
-            add++;
-        }
 
         playState === 1 ? playBtnIcon[activeMusic].classList.add('activeNow') : playBtnIcon[activeMusic].classList.remove('activeNow');
 
@@ -367,64 +419,8 @@ musicCollectionBtn.addEventListener('click', () => {
     musicCollection.style.height === '50vh' ? musicCollection.style.height = '0vh' : musicCollection.style.height = '50vh';
 });
 
-///loop for playlist
-for (i = 0; i < music.length; i++) {
 
-    ///Create playlist elements
-    ///containers
-    const container = document.createElement('div');
-    const divImg = document.createElement('div');
-    const divTitle = document.createElement('div');
-    const divAditional = document.createElement('div');
-    ///elements
-    const likeIcon = document.createElement('i');
-    const addToFavoriteIcon = document.createElement('i');
-    const playBtnIco = document.createElement('i');
-    const img = document.createElement('img');
-    const author = document.createElement('span');
-    const name = document.createElement('span');
 
-    ///Added classes
-    container.classList.add('d-flex', 'music-collection__container', 'pt-2', 'pb-2');
-    divImg.classList.add('position-relative');
-    divTitle.classList.add('d-flex', 'flex-column', 'align-items-center', 'w-100', 'titleContainer');
-    divAditional.classList.add('d-flex', 'flex-row', 'additional');
-    img.classList.add('titleImgCollection', 'ml-3');
-    author.classList.add('pt-1', 'pb-2');
-    likeIcon.classList.add('fa', 'likeIcon', 'mt-3', 'fa-heart-o');
-    addToFavoriteIcon.classList.add('fa', 'favoriteIcon', 'mt-3', 'ml-3', 'fa-plus');
-    playBtnIco.classList.add('fa', 'fa-play-circle', 'position-absolute');
-    ///Added ids
-    author.id = 'titleAuthor';
-    name.id = 'titleName';
-
-    ///Database value in the elements
-    img.src = music[i].img;
-
-    music[i].author.length > 16 ? author.innerHTML = music[i].author.slice(0, 16) + '...' : author.innerHTML = music[i].author;
-
-    music[i].name.length > 16 ? name.innerHTML = music[i].name.slice(0, 16) + '...' : name.innerHTML = music[i].name;
-
-    ///Added elements into html
-    divImg.appendChild(playBtnIco);
-    divImg.appendChild(img);
-    container.appendChild(divImg);
-    container.appendChild(divTitle);
-    divTitle.appendChild(author);
-    divTitle.appendChild(name);
-    container.appendChild(divAditional);
-    divAditional.appendChild(likeIcon);
-    divAditional.appendChild(addToFavoriteIcon);
-    musicCollection.appendChild(container);
-}
-
-const musicCollectionContainer = document.querySelectorAll('.music-collection__container');
-const like = document.querySelectorAll('.likeIcon');
-const titleContainer = document.querySelectorAll('.titleContainer');
-const titleImgCollection = document.querySelectorAll('.titleImgCollection');
-const favorite = document.querySelectorAll('.favoriteIcon');
-const playBtnIcon = document.querySelectorAll('.fa-play-circle');
-let previousActiveMusic;
 
 ///Change music on click from playlist
 musicCollectionContainer.forEach((el, id) => {
