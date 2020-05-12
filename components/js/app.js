@@ -76,7 +76,7 @@ for (i = 0; i < music.length; i++) {
     author.classList.add('pt-1', 'pb-2');
     likeIcon.classList.add('fa', 'likeIcon', 'mt-3', 'fa-heart-o');
     addToFavoriteIcon.classList.add('fa', 'favoriteIcon', 'mt-3', 'ml-3', 'fa-plus');
-    playBtnIco.classList.add('fa', 'fa-play-circle', 'position-absolute');
+    playBtnIco.classList.add('fa', 'playListPlay', 'position-absolute', 'fa-play-circle');
     ///Added ids
     author.id = 'titleAuthor';
     name.id = 'titleName';
@@ -106,7 +106,7 @@ const like = document.querySelectorAll('.likeIcon');
 const titleContainer = document.querySelectorAll('.titleContainer');
 const titleImgCollection = document.querySelectorAll('.titleImgCollection');
 const favorite = document.querySelectorAll('.favoriteIcon');
-const playBtnIcon = document.querySelectorAll('.fa-play-circle');
+const playBtnIcon = document.querySelectorAll('.playListPlay');
 
 ///Music live info
 const musicInfo = () => {
@@ -424,13 +424,6 @@ musicCollectionBtn.addEventListener('click', () => {
 ///Change music on click from playlist
 musicCollectionContainer.forEach((el, id) => {
 
-    ///Change music Function
-    const changeMusic = () => {
-        activeMusic = id;
-        musicInfo();
-        playState === 1 ? musicCtrl(1) : musicCtrl(0);
-    }
-
     ///Mouse hover effect
     musicCollectionContainer[id].addEventListener('mouseenter', () => {
         if (activeMusic !== id) {
@@ -447,7 +440,11 @@ musicCollectionContainer.forEach((el, id) => {
     });
 
     ///Change music event
-    playBtnIcon[id].addEventListener('click', changeMusic);
+    playBtnIcon[id].addEventListener('click', () => {
+        activeMusic = id;
+        musicInfo();
+        myAudio.play();
+    });
 
     ///Like event
     like[id].addEventListener('click', () => {
