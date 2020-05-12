@@ -49,6 +49,7 @@ const music = [
         img: './components/img/lil_nas.jpg'
     }
 ];
+
 ///loop for playlist
 for (i = 0; i < music.length; i++) {
 
@@ -106,6 +107,7 @@ const titleContainer = document.querySelectorAll('.titleContainer');
 const titleImgCollection = document.querySelectorAll('.titleImgCollection');
 const favorite = document.querySelectorAll('.favoriteIcon');
 const playBtnIcon = document.querySelectorAll('.fa-play-circle');
+
 ///Music live info
 const musicInfo = () => {
     myAudio.src = music[activeMusic].src;
@@ -419,9 +421,6 @@ musicCollectionBtn.addEventListener('click', () => {
     musicCollection.style.height === '50vh' ? musicCollection.style.height = '0vh' : musicCollection.style.height = '50vh';
 });
 
-
-
-
 ///Change music on click from playlist
 musicCollectionContainer.forEach((el, id) => {
 
@@ -429,8 +428,7 @@ musicCollectionContainer.forEach((el, id) => {
     const changeMusic = () => {
         activeMusic = id;
         musicInfo();
-        musicCtrl(1);
-        myAudio.play();
+        playState === 1 ? musicCtrl(1) : musicCtrl(0);
     }
 
     ///Mouse hover effect
@@ -449,7 +447,6 @@ musicCollectionContainer.forEach((el, id) => {
     });
 
     ///Change music event
-    titleImgCollection[id].addEventListener('click', changeMusic);
     playBtnIcon[id].addEventListener('click', changeMusic);
 
     ///Like event

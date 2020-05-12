@@ -240,8 +240,8 @@ progress::-webkit-progress-value {
 }
 
 .fa-play-circle {
-  -webkit-transition: .3s;
-  transition: .3s;
+  -webkit-transition: .5s;
+  transition: .5s;
   color: #00aeffe1;
   margin-left: 27px;
   margin-top: 7px;
@@ -278,6 +278,8 @@ progress::-webkit-progress-value {
 }
 
 .activePlay {
+  -webkit-transition: .5s;
+  transition: .5s;
   opacity: 1;
 }
 
