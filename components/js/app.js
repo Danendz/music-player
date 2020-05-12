@@ -1,27 +1,40 @@
+///Audio execution
 const myAudio = document.getElementById('myAudio');
+
+///Text
 const durationAudio = document.getElementById('durationAudio');
+const timeAudio = document.getElementById('timeAudio');
+
+///Containers 
+const musicCollection = document.querySelector('.music-collection');
+
+///Icons
+const replyFa = document.querySelector('.fa-retweet');
+const randomFa = document.querySelector('.fa-random');
+const playFa = document.querySelector('.fa-play');
+
+///Buttons
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
 const backBtn = document.getElementById('back');
 const replyBtn = document.getElementById('reply');
-const replyFa = document.querySelector('.fa-retweet');
 const randomBtn = document.getElementById('random');
-const randomFa = document.querySelector('.fa-random');
-const timeAudio = document.getElementById('timeAudio');
-const playFa = document.querySelector('.fa-play');
-const progress = document.getElementById('progress');
-const progressBar = document.querySelector('.progressBar');
+const volumeShow = document.querySelector('.volumeShow');
+const mute = document.getElementById('mute');
+const musicCollectionBtn = document.querySelector('.controls-container__title-image');
+
+///Title
 const titleAuthor = document.getElementById('titleAuthor');
 const titleName = document.getElementById('titleName');
 const titleImg = document.querySelector('.titleImg');
-const volume = document.getElementById('volume');
-const mute = document.getElementById('mute');
-const buffered = document.getElementById('buffered');
-const musicCollectionBtn = document.querySelector('.controls-container__title-image');
-const musicCollection = document.querySelector('.music-collection');
-const volumeProgress = document.querySelector('.progress-volume');
-const volumeShow = document.querySelector('.volumeShow');
 
+///Progress Bars
+const progress = document.getElementById('progress');
+const progressBar = document.querySelector('.progressBar');
+const volume = document.getElementById('volume');
+const buffered = document.getElementById('buffered');
+
+///Variables
 let seeking = false, playState, activeMusic, reply = 0, random = 0, previousActiveMusic;
 
 ///Pseudo database
@@ -141,6 +154,7 @@ const init = () => {
     activeMusic = 0;
     myAudio.currentTime = 0.1;
     timeAudio.textContent = `0:00`;
+    volume.style.transform = 'scaleX(0)';
     musicInfo();
 }
 
@@ -287,8 +301,8 @@ document.addEventListener('keydown', (e) => {
             myAudio.volume <= 0.1 ? myAudio.volume = 0 : myAudio.volume -= 0.1;
             break;
     }
-
 });
+
 ///The live update for music(maybe it was not a good idea to do this)
 setInterval(() => {
     if (myAudio.duration > 0) {
@@ -362,7 +376,6 @@ setInterval(() => {
                 myAudio.currentTime = event.seekTime;
             });
         }
-
     }
 }, 30);
 
@@ -425,20 +438,21 @@ mute.addEventListener('click', () => {
         myAudio.volume = 1;
     }
 });
-volumeProgress.style.transform = 'scaleX(0)';
+
+///Show volume progress on angle
 volumeShow.addEventListener('click', () => {
-    if(volumeProgress.style.transform === 'scaleX(0)'){
-        volumeProgress.style.transform = 'scaleX(1.0)';
+    if(volume.style.transform === 'scaleX(0)'){
+        volume.style.transform = 'scaleX(1.0)';
         volumeShow.classList.remove('fa-angle-left');
         volumeShow.classList.add('fa-angle-right');
 
     }else{
-        volumeProgress.style.transform = 'scaleX(0)';
+        volume.style.transform = 'scaleX(0)';
         volumeShow.classList.remove('fa-angle-right');
         volumeShow.classList.add('fa-angle-left');
 
     }
-})
+});
 
 ///Playlist open and close
 musicCollectionBtn.addEventListener('click', () => {
