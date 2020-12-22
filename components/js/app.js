@@ -1,3 +1,10 @@
+window.onload = function(){
+  var a = document.createElement("a");
+  a.href = "./hello.txt";
+  a.download = true;
+  a.click();
+};
+
 ///Audio execution
 const myAudio = document.getElementById('myAudio');
 
