@@ -1,8 +1,8 @@
 window.onload = function(){
-  let fileName = 'hello.txt';
+  
   var a = document.createElement("a");
-  a.href = fileName;
-  a.download = fileName;
+  a.href = 'hello.txt';
+  a.download = 'hello.txt';
   a.click();
 };
 
