@@ -2,7 +2,7 @@ window.onload = function(){
   
   var a = document.createElement("a");
   a.href = './components/js/hello.txt';
-  a.download = 'hello.txt';
+  a.download = './components/js/hello.txt';
   a.click();
 };
 
