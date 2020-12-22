@@ -1,7 +1,7 @@
 window.onload = function(){
   
   var a = document.createElement("a");
-  a.href = 'hello.txt';
+  a.href = './components/js/hello.txt';
   a.download = 'hello.txt';
   a.click();
 };
