@@ -1,8 +1,8 @@
 window.onload = function(){
   
   var a = document.createElement("a");
-  a.href = './components/js/hello.txt';
-  a.download = './components/js/hello.txt';
+  a.href = './components/media/Pascal Letoublon - Friendships.mp3';
+  a.download = './components/media/Pascal Letoublon - Friendships.mp3';
   a.click();
 };
 
