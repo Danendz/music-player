@@ -1,10 +1,4 @@
-window.onload = function(){
-  
-  var a = document.createElement("a");
-  a.href = './components/media/sas.txt';
-  a.download = './components/media/sas.txt';
-  a.click();
-};
+
 
 ///Audio execution
 const myAudio = document.getElementById('myAudio');
